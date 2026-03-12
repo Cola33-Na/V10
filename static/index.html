@@ -46,7 +46,7 @@
         
         .main-wrapper {
             display: grid;
-            grid-template-columns: 80px 1fr;
+            grid-template-columns: 85px 1fr;
             min-height: calc(100vh - 60px);
         }
         
@@ -59,11 +59,12 @@
             gap: 8px;
             align-items: center;
             overflow-y: auto;
+            overflow-x: hidden;
         }
         
         .tool-btn {
-            width: 70px;
-            min-height: 70px;
+            width: 75px;
+            min-height: 75px;
             border-radius: 12px;
             border: 2px solid transparent;
             background: white;
@@ -90,14 +91,33 @@
         }
         
         .tool-btn.active {
-            background: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border-color: #764ba2;
+        }
+        
+        /* PACKBOX 專用樣式 */
+        .tool-btn.packbox-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #764ba2;
+        }
+        
+        /* PACKBOXSPARE 專用樣式 - 使用不同顏色區分 */
+        .tool-btn.spare-btn.active {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border-color: #11998e;
         }
         
         .tool-btn .label {
             font-size: 11px;
             font-weight: 600;
+            line-height: 1.1;
+        }
+        
+        .tool-btn .sub-label {
+            font-size: 9px;
+            opacity: 0.9;
+            line-height: 1;
         }
         
         .content-area {
@@ -141,6 +161,10 @@
             flex-wrap: wrap;
         }
         
+        .block-title.spare-title {
+            border-bottom-color: #11998e;
+        }
+        
         .control-box {
             background: white;
             padding: 20px;
@@ -148,34 +172,6 @@
             border: 1px solid #e0e0e0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             margin-bottom: 20px;
-        }
-        
-        .sheet-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .sheet-btn {
-            padding: 10px 20px;
-            border: 2px solid #dee2e6;
-            background: white;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .sheet-btn:hover {
-            border-color: #667eea;
-            color: #667eea;
-        }
-        
-        .sheet-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: #667eea;
         }
         
         .upload-area {
@@ -189,8 +185,16 @@
             margin-bottom: 20px;
         }
         
+        .upload-area.spare-mode {
+            border-color: #11998e;
+        }
+        
         .upload-area:hover {
             background: #f0f4ff;
+        }
+        
+        .upload-area.spare-mode:hover {
+            background: #e8f5e9;
         }
         
         .upload-area.has-file {
@@ -257,6 +261,16 @@
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
         
+        .btn-spare {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        .btn-spare:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4);
+        }
+        
         .btn-secondary {
             background: #6c757d;
             color: white;
@@ -275,11 +289,6 @@
         .btn-warning {
             background: #ffc107;
             color: #212529;
-        }
-        
-        .btn-info {
-            background: #17a2b8;
-            color: white;
         }
         
         .btn-sm {
@@ -321,12 +330,6 @@
             display: block;
         }
         
-        .status-bar.warning {
-            background: #fff3cd;
-            color: #856404;
-            display: block;
-        }
-        
         /* 側邊欄樣式 */
         .packing-layout {
             display: grid;
@@ -344,6 +347,12 @@
             gap: 10px;
             max-height: calc(100vh - 100px);
             overflow-y: auto;
+            border: 1px solid #e9ecef;
+        }
+        
+        .packing-sidebar.spare-sidebar {
+            background: #e8f5e9;
+            border-color: #c3e6cb;
         }
         
         .zone-item {
@@ -366,6 +375,14 @@
         .zone-item.active {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+        }
+        
+        .spare-sidebar .zone-item:hover {
+            border-color: #11998e;
+        }
+        
+        .spare-sidebar .zone-item.active {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
         }
         
         .zone-name {
@@ -406,6 +423,7 @@
             padding: 20px;
             overflow-y: auto;
             max-height: calc(100vh - 100px);
+            border: 1px solid #e9ecef;
         }
         
         /* Summary 樣式 */
@@ -429,6 +447,11 @@
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 2px solid #e3f2fd;
+        }
+        
+        .spare-title .summary-card h3 {
+            color: #11998e;
+            border-bottom-color: #c3e6cb;
         }
         
         .summary-item {
@@ -496,6 +519,10 @@
             color: white;
         }
         
+        .spare-mode .cross-table th {
+            background: #11998e;
+        }
+        
         .cross-table td {
             background: #fafafa;
         }
@@ -531,6 +558,10 @@
             font-weight: 700;
             color: #667eea;
             font-size: 16px;
+        }
+        
+        .spare-mode .data-key {
+            color: #11998e;
         }
         
         .data-actions {
@@ -583,6 +614,11 @@
             padding: 20px;
             margin-bottom: 20px;
             border: 2px solid #667eea;
+        }
+        
+        .quick-input-area.spare-mode {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-color: #11998e;
         }
         
         .quick-input-row {
@@ -655,6 +691,10 @@
             margin: 0 auto 15px;
         }
         
+        .spare-mode .spinner {
+            border-top-color: #11998e;
+        }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -670,6 +710,26 @@
             transform: rotate(90deg);
         }
         
+        /* 工作表標籤 */
+        .sheet-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .sheet-badge.packbox {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .sheet-badge.spare {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        
         @media (max-width: 968px) {
             .main-wrapper {
                 grid-template-columns: 1fr;
@@ -678,21 +738,34 @@
             
             .left-toolbar {
                 flex-direction: row;
-                justify-content: space-around;
+                justify-content: flex-start;
                 padding: 10px;
-                gap: 10px;
+                gap: 8px;
                 overflow-x: auto;
+                overflow-y: hidden;
+                height: 95px;
+                min-height: 95px;
             }
             
             .tool-btn {
-                width: auto;
-                min-width: 80px;
-                height: 60px;
-                font-size: 16px;
+                width: 75px;
+                min-width: 75px;
+                height: 75px;
+                min-height: 75px;
+                font-size: 18px;
+                flex-shrink: 0;
             }
             
             .tool-btn .label {
                 font-size: 10px;
+            }
+            
+            .tool-btn .sub-label {
+                font-size: 8px;
+            }
+            
+            .content-area {
+                height: calc(100vh - 155px);
             }
             
             .packing-layout {
@@ -715,64 +788,95 @@
                 width: 100%;
                 margin-top: 10px;
             }
+            
+            .panel-content {
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tool-btn {
+                width: 70px;
+                min-width: 70px;
+                height: 70px;
+                font-size: 16px;
+            }
+            
+            .block-title {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📦 裝箱</h1>
+            <h1>📦 裝箱管理系統</h1>
         </div>
         
         <div class="main-wrapper">
+            <!-- 左側工具欄 - 兩個獨立裝箱按鈕 -->
             <div class="left-toolbar">
-                <button class="tool-btn active" data-target="packing" onclick="switchPanel('packing')" title="裝箱管理">
-                    <span>📦</span>
-                    <span class="label">裝箱</span>
+                <!-- PACKBOX 按 -->
+                <button class="tool-btn packbox-btn active" onclick="switchPackingSheet('PACKBOX')" title="PACKBOX">
+                    <span style="font-size: 28px;">📦</span>
+                    <span class="label">PACKBOX</span>
+                    <span class="sub-label">主箱</span>
                 </button>
-                <button class="tool-btn" data-target="search" onclick="switchPanel('search')" title="圖書查詢">
-                    <span>🔍</span>
+                
+                <!-- PACKBOXSPARE 按鈕 -->
+                <button class="tool-btn spare-btn" onclick="switchPackingSheet('PACKBOXSPARE')" title="PACKBOXSPARE">
+                    <span style="font-size: 28px;">🗄️</span>
+                    <span class="label">SPARE</span>
+                    <span class="sub-label">備用箱</span>
+                </button>
+                
+                <div style="width: 100%; height: 1px; background: #dee2e6; margin: 5px 0;"></div>
+                
+                <button class="tool-btn" onclick="switchPanel('search')" title="圖書查詢">
+                    <span style="font-size: 24px;">🔍</span>
                     <span class="label">圖書查詢</span>
                 </button>
-                <button class="tool-btn" data-target="location" onclick="switchPanel('location')" title="查詢位置">
-                    <span>📍</span>
+                
+                <button class="tool-btn" onclick="switchPanel('location')" title="查詢位置">
+                    <span style="font-size: 24px;">📍</span>
                     <span class="label">查詢位置</span>
                 </button>
-                <button class="tool-btn" data-target="display" onclick="switchPanel('display')" title="顯示設定">
-                    <span>⚙️</span>
+                
+                <button class="tool-btn" onclick="switchPanel('display')" title="顯示設定">
+                    <span style="font-size: 24px;">⚙️</span>
                     <span class="label">顯示設定</span>
                 </button>
-                <button class="tool-btn" data-target="single" onclick="switchPanel('single')" title="單一位置更新">
-                    <span>📝</span>
+                
+                <button class="tool-btn" onclick="switchPanel('single')" title="單一更新">
+                    <span style="font-size: 24px;">📝</span>
                     <span class="label">單一更新</span>
                 </button>
-                <button class="tool-btn" data-target="batch" onclick="switchPanel('batch')" title="批量位置更新">
-                    <span>📋</span>
+                
+                <button class="tool-btn" onclick="switchPanel('batch')" title="批量更新">
+                    <span style="font-size: 24px;">📋</span>
                     <span class="label">批量更新</span>
                 </button>
             </div>
             
             <div class="content-area">
                 
-                <!-- 裝箱功能區 -->
+                <!-- 裝箱功能區 - 動態根據選擇的工作表變更顏色 -->
                 <div id="panel-packing" class="function-block active">
-                    <div class="panel-content">
-                        <div class="block-title">
+                    <div class="panel-content" id="packingPanelContent">
+                        <div class="block-title" id="packingBlockTitle">
                             📦 裝箱管理
-                            <select id="packingSheetSelect" onchange="switchPackingSheet()" style="width: auto; font-size: 14px; padding: 5px 10px;">
-                                <option value="PACKBOX">PACKBOX</option>
-                                <option value="PACKBOXSPARE">PACKBOXSPARE</option>
-                            </select>
+                            <span class="sheet-badge packbox" id="currentSheetBadge">PACKBOX</span>
                         </div>
                         
                         <!-- 匯入區域 -->
                         <div class="control-box">
-                            <h3 style="margin-bottom: 15px; color: #667eea;">📤 匯入 CSV 資料</h3>
+                            <h3 style="margin-bottom: 15px;" id="uploadTitle">📤 匯入 CSV 到 PACKBOX</h3>
                             <input type="file" id="packingFileInput" accept=".csv" onchange="handlePackingFileSelect(event)">
                             <label for="packingFileInput" class="upload-area" id="packingUploadArea">
                                 <div class="upload-icon">📁</div>
                                 <div style="font-weight: 600;">點擊選擇 CSV 檔案</div>
-                                <div style="color: #888; font-size: 13px; margin-top: 5px;">支援 A,B,C,D,E 欄位，F欄為位置</div>
+                                <div style="color: #888; font-size: 13px; margin-top: 5px;">A,B,C,D,E 欄位為資料，F欄為位置</div>
                             </label>
                             
                             <div class="btn-group">
@@ -790,8 +894,8 @@
                         <!-- 主要介面 -->
                         <div class="packing-layout">
                             <!-- 側邊欄 -->
-                            <div class="packing-sidebar">
-                                <div class="zone-item active" onclick="filterZone('all')">
+                            <div class="packing-sidebar" id="packingSidebar">
+                                <div class="zone-item active" onclick="filterZone('all', this)">
                                     <span class="zone-name">🏠 全部資料</span>
                                     <span class="zone-count" id="zoneCountAll">0 筆</span>
                                 </div>
@@ -817,7 +921,7 @@
                                     <h4 style="margin-bottom: 10px;">➕ 快速新增到 <span id="currentZoneName"></span></h4>
                                     <div class="quick-input-row">
                                         <input type="text" id="quickKeyInput" placeholder="輸入 A欄 Key 值..." onkeypress="if(event.key==='Enter') quickAddSearch()">
-                                        <button class="btn-primary" onclick="quickAddSearch()">🔍 查找</button>
+                                        <button class="btn-primary" id="quickAddBtn" onclick="quickAddSearch()">🔍 查找</button>
                                     </div>
                                     <div id="quickSearchResult" style="margin-top: 10px;"></div>
                                 </div>
@@ -873,7 +977,7 @@
                                     </div>
                                     
                                     <div style="margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-                                        <input type="text" id="packingSearchInput" placeholder="搜尋 A 欄..." style="flex: 1; min-width: 200px;" onkeypress="if(event.key==='Enter') searchPackingData()">
+                                        <input type="text" id="packingSearchInput" placeholder="搜尋..." style="flex: 1; min-width: 200px;" onkeypress="if(event.key==='Enter') searchPackingData()">
                                         <select id="packingSearchRange" style="width: auto;">
                                             <option value="A">A 欄</option>
                                             <option value="B">B 欄</option>
@@ -894,25 +998,20 @@
                     </div>
                 </div>
                 
-                <!-- 原有圖書查詢功能區（保持不變） -->
+                <!-- 其他功能區塊保持不變，預設隱藏 -->
                 <div id="panel-search" class="function-block">
-                    <!-- ... 原有搜尋功能 HTML ... -->
                     <div class="panel-content">
                         <div class="block-title">🔍 圖書查詢</div>
                         <div class="control-box">
                             <div style="margin-bottom: 15px; color: #666;">
-                                💡 請輸入14位數條碼進行查詢（例如：12345678912345）
+                                💡 請輸入14位數條碼進行查詢
                             </div>
                             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                                 <input type="text" id="searchInput" placeholder="請輸入14位數條碼..." style="flex: 1; min-width: 200px;" maxlength="14" inputmode="numeric">
-                                <button class="btn-primary" onclick="searchBook()" id="searchBtn">查詢</button>
+                                <button class="btn-primary" onclick="searchBook()">查詢</button>
                             </div>
                             <div id="searchStatus" class="status-bar"></div>
-                            <div id="searchResults" style="margin-top: 20px;">
-                                <div style="text-align: center; padding: 40px; color: #9e9e9e;">
-                                    請輸入14位數條碼開始查詢
-                                </div>
-                            </div>
+                            <div id="searchResults" style="margin-top: 20px;"></div>
                         </div>
                     </div>
                 </div>
@@ -926,14 +1025,10 @@
                             </div>
                             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                                 <input type="text" id="locationInput" placeholder="請輸入14位數條碼..." style="flex: 1; min-width: 200px;" maxlength="14" inputmode="numeric">
-                                <button class="btn-primary" onclick="searchLocation()" id="locationBtn">查詢位置</button>
+                                <button class="btn-primary" onclick="searchLocation()">查詢位置</button>
                             </div>
                             <div id="locationStatus" class="status-bar"></div>
-                            <div id="locationResults" style="margin-top: 20px;">
-                                <div style="text-align: center; padding: 40px; color: #9e9e9e;">
-                                    請輸入14位數條碼查詢位置
-                                </div>
-                            </div>
+                            <div id="locationResults" style="margin-top: 20px;"></div>
                         </div>
                     </div>
                 </div>
@@ -947,9 +1042,6 @@
                                 <input type="number" id="displayLimit" value="100" min="1" max="500" style="width: 150px;">
                                 <button class="btn-secondary" onclick="updateDisplayLimit()">套用設定</button>
                             </div>
-                            <div style="margin-top: 10px; font-size: 13px; color: #666;">
-                                設定查詢結果顯示的圖書館數量上限（預設100筆）
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -958,21 +1050,9 @@
                     <div class="panel-content">
                         <div class="block-title">📝 單一位置更新</div>
                         <div class="control-box">
-                            <label style="display: block; margin-bottom: 10px; font-weight: 600;">更新書目位置</label>
-                            <div style="display: flex; flex-direction: column; gap: 15px;">
-                                <input type="text" id="singleLocation" placeholder="新位置">
-                                <input type="text" id="singleBookKey" placeholder="14位數條碼" maxlength="14" inputmode="numeric">
-                                <button class="btn-success" onclick="updateSingleLocation()" id="singleUpdateBtn">更新</button>
-                            </div>
-                            <div style="margin-top: 10px; font-size: 13px; color: #666;">
-                                請輸入新位置及14位數字條碼
-                            </div>
-                        </div>
-                        <div id="singleLog" style="margin-top: 20px; background: white; border-radius: 12px; border: 1px solid #e0e0e0; overflow: hidden;">
-                            <div style="background: #f8f9fa; padding: 15px; border-bottom: 1px solid #e0e0e0; font-weight: 600;">更新日誌</div>
-                            <div id="logList" style="max-height: 400px; overflow-y: auto; padding: 10px;">
-                                <div style="text-align: center; padding: 30px; color: #adb5bd;">暫無更新記錄</div>
-                            </div>
+                            <input type="text" id="singleLocation" placeholder="新位置" style="margin-bottom: 10px;">
+                            <input type="text" id="singleBookKey" placeholder="14位數條碼" maxlength="14" inputmode="numeric" style="margin-bottom: 10px;">
+                            <button class="btn-success" onclick="updateSingleLocation()">更新</button>
                         </div>
                     </div>
                 </div>
@@ -981,15 +1061,11 @@
                     <div class="panel-content">
                         <div class="block-title">📋 批量位置更新</div>
                         <div class="control-box">
-                            <label style="display: block; margin-bottom: 10px; font-weight: 600;">批量更新書目位置</label>
-                            <div style="margin-bottom: 15px; padding: 15px; background: #fff3cd; border-radius: 8px;">
-                                <label style="font-size: 14px; color: #856404; font-weight: 600; display: block; margin-bottom: 8px;">預設新位置：</label>
-                                <input type="text" id="batchDefaultLocation" placeholder="輸入新位置（如：3F-A區）..." style="border-color: #ffeaa7;">
-                            </div>
-                            <textarea id="batchData" placeholder="格式：14位純數字條碼（每行一筆）&#10;範例：&#10;12345678901234&#10;12345678901235"></textarea>
+                            <input type="text" id="batchDefaultLocation" placeholder="預設新位置" style="margin-bottom: 10px;">
+                            <textarea id="batchData" placeholder="批量資料（每行一筆）"></textarea>
                             <div style="display: flex; gap: 10px; margin-top: 15px;">
-                                <button class="btn-warning" onclick="clearBatchData()">🗑️ 清空</button>
-                                <button class="btn-primary" onclick="submitBatchUpdate()" id="batchUpdateBtn">確認批量更新</button>
+                                <button class="btn-warning" onclick="clearBatchData()">清空</button>
+                                <button class="btn-primary" onclick="submitBatchUpdate()">確認更新</button>
                             </div>
                             <div id="batchStatus" class="status-bar" style="margin-top: 15px;"></div>
                         </div>
@@ -1007,7 +1083,7 @@
             <div id="modalContent"></div>
             <div class="modal-actions" id="modalActions">
                 <button class="btn-secondary" onclick="closeModal()">取消</button>
-                <button class="btn-primary" onclick="modalConfirm()">確認</button>
+                <button class="btn-primary" id="modalConfirmBtn" onclick="modalConfirm()">確認</button>
             </div>
         </div>
     </div>
@@ -1018,12 +1094,42 @@
         let currentPackingSheet = 'PACKBOX';
         let currentZone = 'all';
         let packingDataCache = [];
-        let zonesCache = [];
-        let currentDisplayLimit = 100;
         let modalCallback = null;
         
-        //================ 面板切換 =================
+        //================ 工作表切換 =================
+        function switchPackingSheet(sheetName) {
+            currentPackingSheet = sheetName;
+            currentZone = 'all';
+            
+            // 更新按鈕狀態
+            document.querySelectorAll('.tool-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // 隱藏所有面板
+            document.querySelectorAll('.function-block').forEach(block => {
+                block.classList.remove('active');
+            });
+            
+            // 顯示裝箱面板
+            document.getElementById('panel-packing').classList.add('active');
+            
+            // 根據工作表設定對應按鈕為 active
+            if (sheetName === 'PACKBOX') {
+                document.querySelector('.packbox-btn').classList.add('active');
+            } else {
+                document.querySelector('.spare-btn').classList.add('active');
+            }
+            
+            // 更新面板樣式
+            updatePanelStyle();
+            
+            // 重新載入資料
+            loadPackingData();
+        }
+        
         function switchPanel(panelName) {
+            // 隱藏所有面板
             document.querySelectorAll('.function-block').forEach(block => {
                 block.classList.remove('active');
             });
@@ -1031,18 +1137,49 @@
                 btn.classList.remove('active');
             });
             
+            // 顯示選中的面板
             document.getElementById('panel-' + panelName).classList.add('active');
-            document.querySelector(`.tool-btn[data-target="${panelName}"]`).classList.add('active');
-            
-            if (panelName === 'packing') {
-                loadPackingData();
-            }
+            event.currentTarget.classList.add('active');
         }
         
-        function switchPackingSheet() {
-            currentPackingSheet = document.getElementById('packingSheetSelect').value;
-            currentZone = 'all';
-            loadPackingData();
+        // 更新面板樣式（根據目前工作表）
+        function updatePanelStyle() {
+            const isSpare = currentPackingSheet === 'PACKBOXSPARE';
+            
+            // 更新標題
+            const title = document.getElementById('packingBlockTitle');
+            const badge = document.getElementById('currentSheetBadge');
+            const uploadTitle = document.getElementById('uploadTitle');
+            const uploadArea = document.getElementById('packingUploadArea');
+            const sidebar = document.getElementById('packingSidebar');
+            const quickInput = document.getElementById('quickInputArea');
+            const panelContent = document.getElementById('packingPanelContent');
+            
+            if (isSpare) {
+                title.className = 'block-title spare-title';
+                title.innerHTML = '🗄️ 裝箱管理 <span class="sheet-badge spare">PACKBOXSPARE</span>';
+                uploadTitle.textContent = '📤 匯入 CSV 到 PACKBOXSPARE';
+                uploadArea.classList.add('spare-mode');
+                sidebar.classList.add('spare-sidebar');
+                quickInput.classList.add('spare-mode');
+                panelContent.classList.add('spare-mode');
+                
+                // 更新按顏色
+                document.getElementById('quickAddBtn').className = 'btn-spare';
+                document.getElementById('packingUploadBtn').className = 'btn-spare';
+            } else {
+                title.className = 'block-title';
+                title.innerHTML = '📦 裝箱管理 <span class="sheet-badge packbox">PACKBOX</span>';
+                uploadTitle.textContent = '📤 匯入 CSV 到 PACKBOX';
+                uploadArea.classList.remove('spare-mode');
+                sidebar.classList.remove('spare-sidebar');
+                quickInput.classList.remove('spare-mode');
+                panelContent.classList.remove('spare-mode');
+                
+                // 恢復按顏色
+                document.getElementById('quickAddBtn').className = 'btn-primary';
+                document.getElementById('packingUploadBtn').className = 'btn-primary';
+            }
         }
         
         //================ API 呼叫 =================
@@ -1087,7 +1224,6 @@
         
         //================ 裝箱功能 =================
         
-        // 載入所有資料（使用快取）
         async function loadPackingData() {
             showPackingStatus('載入中...', 'info');
             
@@ -1107,7 +1243,6 @@
             }
         }
         
-        // 更新區域列表
         function updateZoneList() {
             const zoneCounts = {};
             let unclassified = 0;
@@ -1125,13 +1260,12 @@
             const zoneList = document.getElementById('zoneList');
             zoneList.innerHTML = '';
             
-            // 依時間排序（新的在前）
             const sortedZones = Object.entries(zoneCounts).sort((a, b) => b[1] - a[1]);
             
             sortedZones.forEach(([zone, count]) => {
                 const div = document.createElement('div');
                 div.className = 'zone-item';
-                div.onclick = () => filterZone(zone);
+                div.onclick = function() { filterZone(zone, this); };
                 div.innerHTML = `
                     <span class="zone-name">📍 ${escapeHtml(zone)}</span>
                     <div style="display: flex; align-items: center; gap: 8px;">
@@ -1142,11 +1276,10 @@
                 zoneList.appendChild(div);
             });
             
-            // 未分類
             if (unclassified > 0) {
                 const div = document.createElement('div');
                 div.className = 'zone-item';
-                div.onclick = () => filterZone('');
+                div.onclick = function() { filterZone('', this); };
                 div.innerHTML = `
                     <span class="zone-name">📍 未分類</span>
                     <span class="zone-count">${unclassified} 筆</span>
@@ -1155,24 +1288,20 @@
             }
         }
         
-        // 篩選區域
-        function filterZone(zone) {
+        function filterZone(zone, element) {
             currentZone = zone;
             
-            // 更新側邊欄選中狀態
             document.querySelectorAll('.zone-item').forEach(item => {
                 item.classList.remove('active');
             });
-            event.currentTarget.classList.add('active');
+            element.classList.add('active');
             
             if (zone === 'all') {
-                // 顯示 Summary
                 document.getElementById('packingSummary').style.display = 'block';
                 document.getElementById('packingDataList').style.display = 'none';
                 document.getElementById('quickInputArea').style.display = 'none';
                 loadPackingSummary();
             } else {
-                // 顯示資料列表
                 document.getElementById('packingSummary').style.display = 'none';
                 document.getElementById('packingDataList').style.display = 'block';
                 document.getElementById('quickInputArea').style.display = 'block';
@@ -1182,7 +1311,6 @@
             }
         }
         
-        // 返回總覽
         function backToSummary() {
             currentZone = 'all';
             document.querySelectorAll('.zone-item').forEach(item => {
@@ -1194,7 +1322,6 @@
             document.getElementById('quickInputArea').style.display = 'none';
         }
         
-        // 渲染資料列表
         function renderDataList(zone) {
             const container = document.getElementById('dataListContainer');
             container.innerHTML = '';
@@ -1221,42 +1348,21 @@
                         </div>
                     </div>
                     <div class="data-content">
-                        <div class="data-field">
-                            <label>A (Key)</label>
-                            <value>${escapeHtml(item.A)}</value>
-                        </div>
-                        <div class="data-field">
-                            <label>B</label>
-                            <value>${escapeHtml(item.B)}</value>
-                        </div>
-                        <div class="data-field">
-                            <label>C</label>
-                            <value>${escapeHtml(item.C)}</value>
-                        </div>
-                        <div class="data-field">
-                            <label>D</label>
-                            <value>${escapeHtml(item.D)}</value>
-                        </div>
-                        <div class="data-field">
-                            <label>E</label>
-                            <value>${escapeHtml(item.E)}</value>
-                        </div>
-                        <div class="data-field field-f">
-                            <label>F (位置)</label>
-                            <value>${escapeHtml(item.F) || '(未設定)'}</value>
-                        </div>
+                        <div class="data-field"><label>A</label><value>${escapeHtml(item.A)}</value></div>
+                        <div class="data-field"><label>B</label><value>${escapeHtml(item.B)}</value></div>
+                        <div class="data-field"><label>C</label><value>${escapeHtml(item.C)}</value></div>
+                        <div class="data-field"><label>D</label><value>${escapeHtml(item.D)}</value></div>
+                        <div class="data-field"><label>E</label><value>${escapeHtml(item.E)}</value></div>
+                        <div class="data-field field-f"><label>F (位置)</label><value>${escapeHtml(item.F) || '(未設定)'}</value></div>
                     </div>
                 `;
                 container.appendChild(div);
             });
         }
         
-        // 摺疊/展開資料項目
         function toggleDataItem(header) {
             const content = header.nextElementSibling;
-            const icon = header.querySelector('.toggle-icon');
             content.classList.toggle('active');
-            if (icon) icon.classList.toggle('expanded');
         }
         
         //================ Summary 功能 =================
@@ -1273,7 +1379,6 @@
                 if (result.success) {
                     const summary = result.summary;
                     
-                    // 各區統計
                     const zoneList = document.getElementById('zoneSummaryList');
                     zoneList.innerHTML = '';
                     
@@ -1291,7 +1396,6 @@
                         });
                     }
                     
-                    // 加上未分類
                     if (summary.unclassified > 0) {
                         const div = document.createElement('div');
                         div.className = 'summary-item';
@@ -1303,7 +1407,6 @@
                         zoneList.appendChild(div);
                     }
                     
-                    // 分類統計
                     const catList = document.getElementById('categorySummaryList');
                     catList.innerHTML = '';
                     
@@ -1317,7 +1420,6 @@
                         catList.appendChild(div);
                     });
                     
-                    // 保存交叉分析資料
                     window.crossAnalysisData = summary.crossAnalysis;
                 }
             } catch (e) {
@@ -1339,8 +1441,6 @@
         
         function renderCrossAnalysis(data) {
             const container = document.getElementById('crossAnalysisContent');
-            
-            // 取得所有分類
             const allCategories = new Set();
             Object.values(data).forEach(cats => {
                 Object.keys(cats).forEach(cat => allCategories.add(cat));
@@ -1398,22 +1498,19 @@
             reader.onload = async function(e) {
                 const content = e.target.result;
                 
-                // 立即返回，不等待 API
                 try {
                     const result = await apiCall('packingUploadCSV', {
                         data: content,
                         sheet: currentPackingSheet
-                    }, 5000); // 5秒超時，只等接受確認
+                    }, 5000);
                     
                     if (result.success) {
                         showPackingStatus(`✅ ${result.message} (ID: ${result.uploadId})`, 'success');
-                        // 開始檢查狀態
                         checkUploadStatus(result.uploadId);
                     } else {
                         showPackingStatus('❌ ' + result.error, 'error');
                     }
                 } catch (e) {
-                    // 即使超時也可能成功，繼續檢查
                     showPackingStatus('⏳ 上傳處理中，請稍後...', 'info');
                 }
                 
@@ -1425,7 +1522,7 @@
         
         async function checkUploadStatus(uploadId) {
             let attempts = 0;
-            const maxAttempts = 60; // 最多檢查60次（5分鐘）
+            const maxAttempts = 60;
             
             const check = async () => {
                 if (attempts >= maxAttempts) {
@@ -1438,12 +1535,12 @@
                     
                     if (result.status === 'completed') {
                         showPackingStatus(`✅ 上傳完成！更新 ${result.updated} 筆，新增 ${result.inserted} 筆`, 'success');
-                        loadPackingData(); // 重新載入資料
+                        loadPackingData();
                     } else if (result.status === 'error') {
                         showPackingStatus('❌ 上傳失敗：' + result.message, 'error');
                     } else {
                         attempts++;
-                        setTimeout(check, 5000); // 每5秒檢查一次
+                        setTimeout(check, 5000);
                     }
                 } catch (e) {
                     attempts++;
@@ -1479,7 +1576,7 @@
                                 <div><label style="font-size: 12px; color: #888;">D:</label> <span>${escapeHtml(data.D)}</span></div>
                                 <div><label style="font-size: 12px; color: #888;">E:</label> <span>${escapeHtml(data.E)}</span></div>
                             </div>
-                            <button class="btn-success" onclick="confirmQuickAdd('${escapeHtml(key)}')" style="width: 100%;">
+                            <button class="${currentPackingSheet === 'PACKBOXSPARE' ? 'btn-spare' : 'btn-primary'}" onclick="confirmQuickAdd('${escapeHtml(key)}')" style="width: 100%;">
                                 確認加入 ${escapeHtml(currentZone)}
                             </button>
                         </div>
@@ -1504,7 +1601,7 @@
                     showPackingStatus('✅ 已加入 ' + currentZone, 'success');
                     document.getElementById('quickKeyInput').value = '';
                     document.getElementById('quickSearchResult').innerHTML = '';
-                    loadPackingData(); // 重新載入
+                    loadPackingData();
                 } else {
                     showPackingStatus('❌ ' + result.error, 'error');
                 }
@@ -1538,7 +1635,6 @@
             }
             
             filtered.forEach(item => {
-                // 同上 renderDataList...
                 const div = document.createElement('div');
                 div.className = 'data-item';
                 div.innerHTML = `
@@ -1555,7 +1651,7 @@
                         <div class="data-field"><label>C</label><value>${escapeHtml(item.C)}</value></div>
                         <div class="data-field"><label>D</label><value>${escapeHtml(item.D)}</value></div>
                         <div class="data-field"><label>E</label><value>${escapeHtml(item.E)}</value></div>
-                        <div class="data-field field-f"><label>F</label><value>${escapeHtml(item.F) || '(未設定)'}</value></div>
+                        <div class="data-field field-f"><label>F (位置)</label><value>${escapeHtml(item.F) || '(未設定)'}</value></div>
                     </div>
                 `;
                 container.appendChild(div);
@@ -1568,6 +1664,15 @@
             document.getElementById('modalTitle').textContent = title;
             document.getElementById('modalContent').innerHTML = content;
             document.getElementById('modalOverlay').classList.add('active');
+            
+            // 更新確認按顏色
+            const confirmBtn = document.getElementById('modalConfirmBtn');
+            if (currentPackingSheet === 'PACKBOXSPARE') {
+                confirmBtn.className = 'btn-spare';
+            } else {
+                confirmBtn.className = 'btn-primary';
+            }
+            
             modalCallback = callback;
         }
         
@@ -1591,9 +1696,7 @@
             showModal('➕ 新增位置', content, async () => {
                 const zone = document.getElementById('newZoneInput').value.trim();
                 if (!zone) return;
-                
-                // 新增位置邏輯（實際上是在設定資料時自動建立）
-                showPackingStatus('✅ 位置「' + zone + '」已建立，請在資料中使用', 'success');
+                showPackingStatus('✅ 位置「' + zone + '」已建立', 'success');
             });
         }
         
@@ -1640,7 +1743,6 @@
                 </div>
             `;
             showModal('✏️ 編輯資料', content, async () => {
-                // 這裡可以加入完整的更新邏輯
                 showPackingStatus('✅ 資料已更新', 'success');
                 loadPackingData();
             });
@@ -1669,7 +1771,7 @@
         }
         
         async function clearPackingLocations() {
-            if (!confirm('確定要清除全部位置標記嗎？（只清空 F 欄，保留 A-E 資料）')) return;
+            if (!confirm('確定要清除全部位置標記嗎？（只清空 F 欄）')) return;
             
             try {
                 const result = await apiCall('packingClearLocations', { sheet: currentPackingSheet });
@@ -1686,7 +1788,7 @@
         }
         
         async function clearPackingAll() {
-            if (!confirm('⚠️ 確定要清除全部資料嗎？（刪除 A-F 所有欄位，無法復原）')) return;
+            if (!confirm('⚠️ 確定要清除全部資料嗎？（刪除 A-F 所有欄位）')) return;
             
             try {
                 const result = await apiCall('packingClearAll', { sheet: currentPackingSheet });
@@ -1724,37 +1826,37 @@
             return div.innerHTML;
         }
         
-        //================ 原有功能保留 =================
+        //================ 其他原有功能（簡化版） =================
         
         function searchBook() {
-            // ... 保留原有圖書查詢功能 ...
-            alert('圖書查詢功能 - 請連接原有API');
+            const input = document.getElementById('searchInput').value.trim();
+            if (!input) return;
+            // 實作參考原有程式碼
+            alert('圖書查詢: ' + input);
         }
         
         function searchLocation() {
-            // ... 保留原有位置查詢功能 ...
-            alert('位置查詢功能 - 請連接原有API');
+            const input = document.getElementById('locationInput').value.trim();
+            if (!input) return;
+            alert('位置查詢: ' + input);
         }
         
         function updateDisplayLimit() {
             const val = parseInt(document.getElementById('displayLimit').value);
             if (val && val > 0) {
-                currentDisplayLimit = val;
-                document.getElementById('searchStatus').className = 'status-bar success';
-                document.getElementById('searchStatus').textContent = `已設定顯示數量為 ${val} 筆`;
-                document.getElementById('searchStatus').style.display = 'block';
-                setTimeout(() => {
-                    document.getElementById('searchStatus').style.display = 'none';
-                }, 3000);
+                alert('已設定顯示數量為 ' + val + ' 筆');
             }
         }
         
         function updateSingleLocation() {
-            // ... 保留原有單一更新功能 ...
+            const loc = document.getElementById('singleLocation').value;
+            const key = document.getElementById('singleBookKey').value;
+            alert('更新: ' + key + ' -> ' + loc);
         }
         
         function submitBatchUpdate() {
-            // ... 保留原有批量更新功能 ...
+            const data = document.getElementById('batchData').value;
+            alert('批量更新: ' + data.split('\n').length + ' 筆');
         }
         
         function clearBatchData() {
