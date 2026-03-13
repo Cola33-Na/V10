@@ -14,7 +14,7 @@
         
         html, body {
             height: 100%;
-            overflow: hidden; /* 防止 body 滾動，由 container 控制 */
+            overflow: hidden;
         }
         
         body {
@@ -26,11 +26,11 @@
             max-width: 1400px;
             margin: 0 auto;
             background: white;
-            height: 100vh; /* 使用 viewport 高度 */
+            height: 100vh;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* 防止整體滾動 */
+            overflow: hidden;
         }
         
         .header {
@@ -38,7 +38,7 @@
             color: white;
             padding: 15px;
             text-align: center;
-            flex-shrink: 0; /* 防止 header 被壓縮 */
+            flex-shrink: 0;
             z-index: 100;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
@@ -52,8 +52,8 @@
         .main-wrapper {
             display: grid;
             grid-template-columns: 85px 1fr;
-            flex: 1; /* 佔據剩餘空間 */
-            min-height: 0; /* 重要：允許 grid 子項收縮 */
+            flex: 1;
+            min-height: 0;
             overflow: hidden;
         }
         
@@ -89,7 +89,7 @@
             padding: 8px 4px;
             text-align: center;
             line-height: 1.2;
-            flex-shrink: 0; /* 防止按鈕被壓縮 */
+            flex-shrink: 0;
         }
         
         .tool-btn:hover, .tool-btn:active {
@@ -142,7 +142,7 @@
             overflow-x: hidden;
             background: #fafafa;
             position: relative;
-            min-height: 0; /* 重要：允許 flex/grid 子項收縮 */
+            min-height: 0;
         }
         
         .function-block {
@@ -176,17 +176,71 @@
             border-bottom: 3px solid #667eea;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 10px;
             flex-wrap: wrap;
             position: sticky;
             top: 0;
-            background: #fafafa; /* 與背景同色 */
+            background: #fafafa;
             z-index: 10;
             padding-top: 5px;
         }
         
         .block-title.spare-title {
             border-bottom-color: #11998e;
+        }
+        
+        .block-title-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .block-title-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .title-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        
+        .title-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .title-btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .title-btn-spare {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        .title-btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .spare-title .title-btn-secondary {
+            color: #11998e;
+            border-color: #11998e;
         }
         
         .control-box {
@@ -355,11 +409,11 @@
             display: block;
         }
         
-        /* 側邊欄樣式 - 修正為 Flex 布局避免高度問題 */
+        /* 側邊欄樣式 */
         .packing-layout {
             display: flex;
             gap: 20px;
-            min-height: calc(100vh - 200px);
+            min-height: calc(100vh - 160px);
         }
         
         .packing-sidebar {
@@ -391,7 +445,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-shrink: 0; /* 防止項目被壓縮 */
+            flex-shrink: 0;
         }
         
         .zone-item:hover {
@@ -452,7 +506,7 @@
         
         .packing-main {
             flex: 1;
-            min-width: 0; /* 重要：防止 flex 項目溢出 */
+            min-width: 0;
             background: white;
             border-radius: 12px;
             padding: 20px;
@@ -679,7 +733,7 @@
             min-width: 150px;
         }
         
-        /* Modal 樣式 - 修正定位問題 */
+        /* Modal 樣式 */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -699,7 +753,7 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            max-width: 400px;
+            max-width: 500px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
@@ -715,7 +769,7 @@
         .modal h3 {
             margin-bottom: 20px;
             color: #333;
-            padding-right: 30px; /* 為關閉按鈕留空間 */
+            padding-right: 30px;
         }
         
         .modal-actions {
@@ -723,6 +777,23 @@
             gap: 10px;
             margin-top: 20px;
             justify-content: flex-end;
+        }
+        
+        /* 上傳專用 Modal 樣式 */
+        .upload-modal-content {
+            text-align: center;
+        }
+        
+        .upload-modal-content .upload-area {
+            margin: 20px 0;
+            padding: 50px 30px;
+        }
+        
+        .upload-hint {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+            line-height: 1.5;
         }
         
         /* Loading 樣式 */
@@ -782,7 +853,7 @@
             background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
         }
         
-        /* 響應式設計 - 平板與手機 */
+        /* 響應式設計 */
         @media (max-width: 968px) {
             .main-wrapper {
                 grid-template-columns: 1fr;
@@ -824,6 +895,22 @@
                 margin: 0 5px;
             }
             
+            .block-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .block-title-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .title-btn {
+                flex: 1;
+                justify-content: center;
+            }
+            
             .packing-layout {
                 flex-direction: column;
             }
@@ -856,7 +943,7 @@
             }
             
             .packing-main {
-                max-height: none; /* 移動端不限制高度，由父容器控制 */
+                max-height: none;
             }
             
             .panel-content {
@@ -864,12 +951,11 @@
             }
             
             .block-title {
-                position: relative; /* 移動端取消 sticky */
+                position: relative;
                 background: transparent;
             }
         }
         
-        /* 小螢幕手機 */
         @media (max-width: 480px) {
             .tool-btn {
                 width: 65px;
@@ -897,7 +983,7 @@
             }
             
             .data-content.active {
-                grid-template-columns: 1fr; /* 單列顯示 */
+                grid-template-columns: 1fr;
             }
             
             .btn-group {
@@ -935,9 +1021,13 @@
                 min-width: 100%;
                 max-width: none;
             }
+            
+            .title-btn {
+                font-size: 13px;
+                padding: 6px 12px;
+            }
         }
         
-        /* 橫屏模式優化 */
         @media (max-height: 600px) and (orientation: landscape) {
             .header {
                 padding: 10px;
@@ -1000,24 +1090,9 @@
         </div>
         
         <div class="main-wrapper">
-            <!-- 左側工具欄 - 兩個獨立裝箱按鈕 -->
+            <!-- 左側工具欄 - 順序調整：一般功能在前，裝箱功能在後 -->
             <div class="left-toolbar">
-                <!-- PACKBOX 按 -->
-                <button class="tool-btn packbox-btn active" onclick="switchPackingSheet('PACKBOX')" title="PACKBOX">
-                    <span style="font-size: 28px;">📦</span>
-                    <span class="label">PACKBOX</span>
-                    <span class="sub-label">主箱</span>
-                </button>
-                
-                <!-- PACKBOXSPARE 按鈕 -->
-                <button class="tool-btn spare-btn" onclick="switchPackingSheet('PACKBOXSPARE')" title="PACKBOXSPARE">
-                    <span style="font-size: 28px;">🗄️</span>
-                    <span class="label">SPARE</span>
-                    <span class="sub-label">備用箱</span>
-                </button>
-                
-                <div class="toolbar-divider"></div>
-                
+                <!-- 一般功能 -->
                 <button class="tool-btn" onclick="switchPanel('search')" title="圖書查詢">
                     <span style="font-size: 24px;">🔍</span>
                     <span class="label">圖書查詢</span>
@@ -1042,38 +1117,41 @@
                     <span style="font-size: 24px;">📋</span>
                     <span class="label">批量更新</span>
                 </button>
+                
+                <div class="toolbar-divider"></div>
+                
+                <!-- 裝箱功能（移到後面） -->
+                <button class="tool-btn packbox-btn active" onclick="switchPackingSheet('PACKBOX')" title="PACKBOX">
+                    <span style="font-size: 28px;">📦</span>
+                    <span class="label">PACKBOX</span>
+                    <span class="sub-label">主箱</span>
+                </button>
+                
+                <button class="tool-btn spare-btn" onclick="switchPackingSheet('PACKBOXSPARE')" title="PACKBOXSPARE">
+                    <span style="font-size: 28px;">🗄️</span>
+                    <span class="label">SPARE</span>
+                    <span class="sub-label">備用箱</span>
+                </button>
             </div>
             
             <div class="content-area">
                 
-                <!-- 裝箱功能區 - 動態根據選擇的工作表變更顏色 -->
+                <!-- 裝箱功能區 -->
                 <div id="panel-packing" class="function-block active">
                     <div class="panel-content" id="packingPanelContent">
                         <div class="block-title" id="packingBlockTitle">
-                            📦 裝箱管理
-                            <span class="sheet-badge packbox" id="currentSheetBadge">PACKBOX</span>
-                        </div>
-                        
-                        <!-- 匯入區域 -->
-                        <div class="control-box">
-                            <h3 style="margin-bottom: 15px;" id="uploadTitle">📤 匯入 CSV 到 PACKBOX</h3>
-                            <input type="file" id="packingFileInput" accept=".csv" onchange="handlePackingFileSelect(event)">
-                            <label for="packingFileInput" class="upload-area" id="packingUploadArea">
-                                <div class="upload-icon">📁</div>
-                                <div style="font-weight: 600;">點擊選擇 CSV 檔案</div>
-                                <div style="color: #888; font-size: 13px; margin-top: 5px;">A,B,C,D,E 欄位為資料，F欄為位置</div>
-                            </label>
-                            
-                            <div class="btn-group">
-                                <button class="btn-primary" onclick="uploadPackingCSV()" id="packingUploadBtn" disabled>
-                                    🚀 開始上傳
+                            <div class="block-title-left">
+                                📦 裝箱管理
+                                <span class="sheet-badge packbox" id="currentSheetBadge">PACKBOX</span>
+                            </div>
+                            <div class="block-title-actions">
+                                <button class="title-btn title-btn-primary" id="uploadFileBtn" onclick="showUploadModal()">
+                                    📤 上傳檔案
                                 </button>
-                                <button class="btn-danger" onclick="clearPackingAll()">
-                                    ❌ 清除全部資料
+                                <button class="title-btn title-btn-secondary" onclick="clearPackingAll()">
+                                    🗑️ 清空
                                 </button>
                             </div>
-                            
-                            <div id="packingUploadStatus" class="status-bar" style="margin-top: 15px;"></div>
                         </div>
                         
                         <!-- 主要介面 -->
@@ -1183,7 +1261,7 @@
                     </div>
                 </div>
                 
-                <!-- 其他功能區塊保持不變，預設隱藏 -->
+                <!-- 其他功能區塊 -->
                 <div id="panel-search" class="function-block">
                     <div class="panel-content">
                         <div class="block-title">🔍 圖書查詢</div>
@@ -1261,7 +1339,7 @@
         </div>
     </div>
     
-    <!-- Modal -->
+    <!-- 通用 Modal -->
     <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
         <div class="modal" onclick="event.stopPropagation()">
             <h3 id="modalTitle">標題</h3>
@@ -1273,6 +1351,36 @@
         </div>
     </div>
 
+    <!-- 上傳檔案專用 Modal -->
+    <div class="modal-overlay" id="uploadModalOverlay" onclick="closeUploadModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <h3 id="uploadModalTitle">📤 上傳 CSV 檔案</h3>
+            <div class="upload-modal-content">
+                <input type="file" id="modalFileInput" accept=".csv" onchange="handleModalFileSelect(event)" style="display: none;">
+                <label for="modalFileInput" class="upload-area" id="modalUploadArea">
+                    <div class="upload-icon">📁</div>
+                    <div style="font-weight: 600; font-size: 18px; margin-bottom: 5px;">點擊選擇 CSV 檔案</div>
+                    <div class="upload-hint">
+                        支援格式：A,B,C,D,E 欄位為資料，F欄為位置<br>
+                        檔案大小限制：5MB
+                    </div>
+                </label>
+                
+                <div id="uploadFileInfo" style="display: none; margin: 15px 0; padding: 15px; background: #e8f5e9; border-radius: 8px; border-left: 4px solid #28a745;">
+                    <div style="font-weight: 600; color: #2e7d32;">✅ 已選擇檔案：<span id="selectedFileName"></span></div>
+                </div>
+                
+                <div id="uploadModalStatus" class="status-bar" style="margin-top: 15px; display: none;"></div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeUploadModal()">取消</button>
+                <button class="btn-primary" id="modalUploadBtn" onclick="confirmModalUpload()" disabled>
+                    🚀 開始上傳
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         //================ 全域設定 =================
         const API_URL = 'https://script.google.com/macros/s/AKfycbyRIBJ6HSuxTOlG1jSlDPi3JdCQsQuoGs_5bsJR8LbvsWIFGaUfJ0LCwulfGbTbpwQ6Nw/exec';
@@ -1280,6 +1388,7 @@
         let currentZone = 'all';
         let packingDataCache = [];
         let modalCallback = null;
+        let selectedModalFile = null;
         
         //================ 工作表切換 =================
         function switchPackingSheet(sheetName) {
@@ -1333,38 +1442,168 @@
             
             // 更新標題
             const title = document.getElementById('packingBlockTitle');
-            const badge = document.getElementById('currentSheetBadge');
-            const uploadTitle = document.getElementById('uploadTitle');
-            const uploadArea = document.getElementById('packingUploadArea');
-            const sidebar = document.getElementById('packingSidebar');
-            const quickInput = document.getElementById('quickInputArea');
-            const panelContent = document.getElementById('packingPanelContent');
+            const uploadBtn = document.getElementById('uploadFileBtn');
             
             if (isSpare) {
                 title.className = 'block-title spare-title';
-                title.innerHTML = '🗄️ 裝箱管理 <span class="sheet-badge spare">PACKBOXSPARE</span>';
-                uploadTitle.textContent = '📤 匯入 CSV 到 PACKBOXSPARE';
-                uploadArea.classList.add('spare-mode');
-                sidebar.classList.add('spare-sidebar');
-                quickInput.classList.add('spare-mode');
-                panelContent.classList.add('spare-mode');
+                title.querySelector('.block-title-left').innerHTML = `
+                    🗄️ 裝箱管理
+                    <span class="sheet-badge spare">PACKBOXSPARE</span>
+                `;
                 
-                // 更新按顏色
+                // 更新按鈕樣式
+                uploadBtn.className = 'title-btn title-btn-spare';
                 document.getElementById('quickAddBtn').className = 'btn-spare';
-                document.getElementById('packingUploadBtn').className = 'btn-spare';
+                document.getElementById('packingSidebar').classList.add('spare-sidebar');
+                document.getElementById('quickInputArea').classList.add('spare-mode');
+                document.getElementById('packingPanelContent').classList.add('spare-mode');
             } else {
                 title.className = 'block-title';
-                title.innerHTML = '📦 裝箱管理 <span class="sheet-badge packbox">PACKBOX</span>';
-                uploadTitle.textContent = '📤 匯入 CSV 到 PACKBOX';
-                uploadArea.classList.remove('spare-mode');
-                sidebar.classList.remove('spare-sidebar');
-                quickInput.classList.remove('spare-mode');
-                panelContent.classList.remove('spare-mode');
+                title.querySelector('.block-title-left').innerHTML = `
+                    📦 裝箱管理
+                    <span class="sheet-badge packbox">PACKBOX</span>
+                `;
                 
-                // 恢復按顏色
+                // 恢復按鈕樣式
+                uploadBtn.className = 'title-btn title-btn-primary';
                 document.getElementById('quickAddBtn').className = 'btn-primary';
-                document.getElementById('packingUploadBtn').className = 'btn-primary';
+                document.getElementById('packingSidebar').classList.remove('spare-sidebar');
+                document.getElementById('quickInputArea').classList.remove('spare-mode');
+                document.getElementById('packingPanelContent').classList.remove('spare-mode');
             }
+        }
+        
+        //================ 上傳 Modal 功能 =================
+        function showUploadModal() {
+            // 重置狀態
+            selectedModalFile = null;
+            document.getElementById('modalFileInput').value = '';
+            document.getElementById('uploadFileInfo').style.display = 'none';
+            document.getElementById('modalUploadBtn').disabled = true;
+            document.getElementById('uploadModalStatus').style.display = 'none';
+            
+            // 更新標題
+            const sheetName = currentPackingSheet === 'PACKBOX' ? 'PACKBOX' : 'PACKBOXSPARE';
+            document.getElementById('uploadModalTitle').textContent = `📤 上傳 CSV 到 ${sheetName}`;
+            
+            // 更新上傳區域顏色
+            const uploadArea = document.getElementById('modalUploadArea');
+            if (currentPackingSheet === 'PACKBOXSPARE') {
+                uploadArea.classList.add('spare-mode');
+            } else {
+                uploadArea.classList.remove('spare-mode');
+            }
+            
+            // 更新上傳按鈕顏色
+            const uploadBtn = document.getElementById('modalUploadBtn');
+            if (currentPackingSheet === 'PACKBOXSPARE') {
+                uploadBtn.className = 'btn-spare';
+            } else {
+                uploadBtn.className = 'btn-primary';
+            }
+            
+            // 顯示 Modal
+            document.getElementById('uploadModalOverlay').classList.add('active');
+        }
+        
+        function closeUploadModal(e) {
+            if (e && e.target !== document.getElementById('uploadModalOverlay')) return;
+            document.getElementById('uploadModalOverlay').classList.remove('active');
+        }
+        
+        function handleModalFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // 檢查檔案類型
+            if (!file.name.toLowerCase().endsWith('.csv')) {
+                showUploadModalStatus('❌ 請選擇 CSV 檔案', 'error');
+                return;
+            }
+            
+            // 檢查檔案大小（5MB）
+            if (file.size > 5 * 1024 * 1024) {
+                showUploadModalStatus('❌ 檔案大小超過 5MB 限制', 'error');
+                return;
+            }
+            
+            selectedModalFile = file;
+            
+            // 顯示檔案資訊
+            document.getElementById('selectedFileName').textContent = file.name;
+            document.getElementById('uploadFileInfo').style.display = 'block';
+            document.getElementById('modalUploadBtn').disabled = false;
+            
+            // 更新上傳區域顯示
+            const uploadArea = document.getElementById('modalUploadArea');
+            uploadArea.classList.add('has-file');
+            uploadArea.innerHTML = `
+                <div class="upload-icon">✅</div>
+                <div style="font-weight: 600; font-size: 18px;">${file.name}</div>
+                <div style="color: #28a745; font-size: 13px; margin-top: 5px;">
+                    檔案大小：${(file.size / 1024).toFixed(1)} KB
+                </div>
+            `;
+            
+            showUploadModalStatus('✅ 檔案已選擇，點擊「開始上傳」按鈕', 'success');
+        }
+        
+        function showUploadModalStatus(message, type) {
+            const bar = document.getElementById('uploadModalStatus');
+            bar.className = 'status-bar ' + type;
+            bar.textContent = message;
+            bar.style.display = 'block';
+            
+            if (type === 'success' || type === 'info') {
+                setTimeout(() => {
+                    bar.style.display = 'none';
+                }, 3000);
+            }
+        }
+        
+        async function confirmModalUpload() {
+            if (!selectedModalFile) return;
+            
+            const btn = document.getElementById('modalUploadBtn');
+            btn.disabled = true;
+            btn.textContent = '上傳中...';
+            
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const content = e.target.result;
+                
+                try {
+                    const result = await apiCall('packingUploadCSV', {
+                        data: content,
+                        sheet: currentPackingSheet
+                    }, 5000);
+                    
+                    if (result.success) {
+                        showUploadModalStatus(`✅ ${result.message}`, 'success');
+                        setTimeout(() => {
+                            closeUploadModal();
+                            checkUploadStatus(result.uploadId);
+                        }, 1500);
+                    } else {
+                        showUploadModalStatus('❌ ' + result.error, 'error');
+                        btn.disabled = false;
+                        btn.textContent = '🚀 開始上傳';
+                    }
+                } catch (e) {
+                    showUploadModalStatus('⏳ 上傳處理中，請稍後...', 'info');
+                    setTimeout(() => {
+                        closeUploadModal();
+                    }, 2000);
+                }
+            };
+            
+            reader.onerror = function() {
+                showUploadModalStatus('❌ 檔案讀取失敗', 'error');
+                btn.disabled = false;
+                btn.textContent = '🚀 開始上傳';
+            };
+            
+            reader.readAsText(selectedModalFile);
         }
         
         //================ API 呼叫 =================
@@ -1651,58 +1890,6 @@
             
             html += '</tbody></table>';
             container.innerHTML = html;
-        }
-        
-        //================ 檔案上傳 =================
-        
-        let selectedPackingFile = null;
-        
-        function handlePackingFileSelect(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            selectedPackingFile = file;
-            const uploadArea = document.getElementById('packingUploadArea');
-            uploadArea.classList.add('has-file');
-            uploadArea.innerHTML = `
-                <div class="upload-icon">✅</div>
-                <div style="font-weight: 600;">${file.name}</div>
-                <div style="color: #28a745; font-size: 13px;">點擊重新選擇</div>
-            `;
-            document.getElementById('packingUploadBtn').disabled = false;
-        }
-        
-        async function uploadPackingCSV() {
-            if (!selectedPackingFile) return;
-            
-            const btn = document.getElementById('packingUploadBtn');
-            btn.disabled = true;
-            btn.textContent = '上傳中...';
-            
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                const content = e.target.result;
-                
-                try {
-                    const result = await apiCall('packingUploadCSV', {
-                        data: content,
-                        sheet: currentPackingSheet
-                    }, 5000);
-                    
-                    if (result.success) {
-                        showPackingStatus(`✅ ${result.message} (ID: ${result.uploadId})`, 'success');
-                        checkUploadStatus(result.uploadId);
-                    } else {
-                        showPackingStatus('❌ ' + result.error, 'error');
-                    }
-                } catch (e) {
-                    showPackingStatus('⏳ 上傳處理中，請稍後...', 'info');
-                }
-                
-                btn.disabled = false;
-                btn.textContent = '🚀 開始上傳';
-            };
-            reader.readAsText(selectedPackingFile);
         }
         
         async function checkUploadStatus(uploadId) {
@@ -1993,6 +2180,27 @@
         
         function showPackingStatus(message, type) {
             const bar = document.getElementById('packingUploadStatus');
+            if (!bar) {
+                // 如果元素不存在（因為已經移到 modal），創建一個臨時提示
+                const tempBar = document.createElement('div');
+                tempBar.className = 'status-bar ' + type;
+                tempBar.textContent = message;
+                tempBar.style.display = 'block';
+                tempBar.style.position = 'fixed';
+                tempBar.style.top = '80px';
+                tempBar.style.left = '50%';
+                tempBar.style.transform = 'translateX(-50%)';
+                tempBar.style.zIndex = '2000';
+                tempBar.style.maxWidth = '90%';
+                tempBar.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                document.body.appendChild(tempBar);
+                
+                setTimeout(() => {
+                    tempBar.remove();
+                }, 3000);
+                return;
+            }
+            
             bar.className = 'status-bar ' + type;
             bar.textContent = message;
             bar.style.display = 'block';
@@ -2016,7 +2224,6 @@
         function searchBook() {
             const input = document.getElementById('searchInput').value.trim();
             if (!input) return;
-            // 實作參考原有程式碼
             alert('圖書查詢: ' + input);
         }
         
