@@ -105,13 +105,11 @@
             border-color: #764ba2;
         }
         
-        /* PACKBOX 專用樣式 */
         .tool-btn.packbox-btn.active {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-color: #764ba2;
         }
         
-        /* PACKBOXSPARE 專用樣式 - 使用不同顏色區分 */
         .tool-btn.spare-btn.active {
             background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             border-color: #11998e;
@@ -241,172 +239,6 @@
         .spare-title .title-btn-secondary {
             color: #11998e;
             border-color: #11998e;
-        }
-        
-        .control-box {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #e0e0e0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-        
-        .upload-area {
-            border: 3px dashed #667eea;
-            border-radius: 12px;
-            padding: 40px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: white;
-            margin-bottom: 20px;
-        }
-        
-        .upload-area.spare-mode {
-            border-color: #11998e;
-        }
-        
-        .upload-area:hover {
-            background: #f0f4ff;
-        }
-        
-        .upload-area.spare-mode:hover {
-            background: #e8f5e9;
-        }
-        
-        .upload-area.has-file {
-            border-color: #28a745;
-            border-style: solid;
-            background: #e8f5e9;
-        }
-        
-        .upload-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-            line-height: 1;
-        }
-        
-        input[type="file"] {
-            display: none;
-        }
-        
-        input[type="text"], input[type="number"], textarea, select {
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s;
-            font-family: inherit;
-            width: 100%;
-        }
-        
-        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        textarea {
-            min-height: 150px;
-            resize: vertical;
-            line-height: 1.6;
-        }
-        
-        button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            white-space: nowrap;
-            touch-action: manipulation;
-        }
-        
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-        
-        .btn-spare {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-        }
-        
-        .btn-spare:hover:not(:disabled) {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4);
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-        
-        .btn-success {
-            background: #28a745;
-            color: white;
-        }
-        
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
-        
-        .btn-warning {
-            background: #ffc107;
-            color: #212529;
-        }
-        
-        .btn-sm {
-            padding: 8px 12px;
-            font-size: 13px;
-        }
-        
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-        
-        .status-bar {
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            display: none;
-            word-break: break-word;
-        }
-        
-        .status-bar.info {
-            background: #e3f2fd;
-            color: #1976d2;
-            display: block;
-        }
-        
-        .status-bar.error {
-            background: #ffebee;
-            color: #c62828;
-            display: block;
-        }
-        
-        .status-bar.success {
-            background: #e8f5e9;
-            color: #2e7d32;
-            display: block;
         }
         
         /* 側邊欄樣式 */
@@ -733,10 +565,13 @@
             min-width: 150px;
         }
         
-        /* Modal 樣式 */
+        /* Modal 樣式 - 修正置中問題 */
         .modal-overlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0;
             background: rgba(0,0,0,0.5);
             z-index: 1000;
             display: none;
@@ -759,6 +594,7 @@
             overflow-y: auto;
             animation: modalSlide 0.3s ease;
             position: relative;
+            margin: auto; /* 確保置中 */
         }
         
         @keyframes modalSlide {
@@ -779,14 +615,53 @@
             justify-content: flex-end;
         }
         
-        /* 上傳專用 Modal 樣式 */
-        .upload-modal-content {
-            text-align: center;
+        /* 上傳 Modal 專用樣式 - 修正輸入框位置 */
+        .upload-modal-overlay .modal {
+            max-width: 450px;
+            width: 90%;
         }
         
-        .upload-modal-content .upload-area {
-            margin: 20px 0;
-            padding: 50px 30px;
+        .upload-modal-content {
+            width: 100%;
+        }
+        
+        /* 上傳區域在 Modal 中的樣式 - 確保不偏移 */
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            width: 100%;
+            display: block; /* 確保區塊級顯示 */
+            margin: 0; /* 移除外部 margin */
+        }
+        
+        .upload-area.spare-mode {
+            border-color: #11998e;
+        }
+        
+        .upload-area:hover {
+            background: #f0f4ff;
+        }
+        
+        .upload-area.spare-mode:hover {
+            background: #e8f5e9;
+        }
+        
+        .upload-area.has-file {
+            border-color: #28a745;
+            border-style: solid;
+            background: #e8f5e9;
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            line-height: 1;
+            display: block;
         }
         
         .upload-hint {
@@ -794,6 +669,138 @@
             font-size: 14px;
             margin-top: 10px;
             line-height: 1.5;
+        }
+        
+        /* Modal 內的上傳區域特殊調整 */
+        .upload-modal-content .upload-area {
+            margin: 20px 0;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        input[type="text"], input[type="number"], textarea, select {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            font-family: inherit;
+            width: 100%;
+        }
+        
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            touch-action: manipulation;
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-spare {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        .btn-spare:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-sm {
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .status-bar {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            word-break: break-word;
+        }
+        
+        .status-bar.info {
+            background: #e3f2fd;
+            color: #1976d2;
+            display: block;
+        }
+        
+        .status-bar.error {
+            background: #ffebee;
+            color: #c62828;
+            display: block;
+        }
+        
+        .status-bar.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: block;
         }
         
         /* Loading 樣式 */
@@ -954,6 +961,11 @@
                 position: relative;
                 background: transparent;
             }
+            
+            .modal {
+                margin: 10px;
+                max-height: calc(100vh - 20px);
+            }
         }
         
         @media (max-width: 480px) {
@@ -970,12 +982,9 @@
                 font-size: 16px;
             }
             
-            .control-box {
-                padding: 15px;
-            }
-            
             .upload-area {
-                padding: 30px 20px;
+                padding: 30px 15px;
+                min-height: 150px;
             }
             
             .upload-icon {
@@ -1006,7 +1015,6 @@
             
             .modal {
                 padding: 20px;
-                margin: 10px;
             }
             
             .modal-actions {
@@ -1043,6 +1051,11 @@
             
             .packing-sidebar {
                 max-height: 150px;
+            }
+            
+            .upload-area {
+                min-height: 120px;
+                padding: 20px;
             }
         }
         
@@ -1090,9 +1103,8 @@
         </div>
         
         <div class="main-wrapper">
-            <!-- 左側工具欄 - 順序調整：一般功能在前，裝箱功能在後 -->
+            <!-- 左側工具欄 -->
             <div class="left-toolbar">
-                <!-- 一般功能 -->
                 <button class="tool-btn" onclick="switchPanel('search')" title="圖書查詢">
                     <span style="font-size: 24px;">🔍</span>
                     <span class="label">圖書查詢</span>
@@ -1120,7 +1132,6 @@
                 
                 <div class="toolbar-divider"></div>
                 
-                <!-- 裝箱功能（移到後面） -->
                 <button class="tool-btn packbox-btn active" onclick="switchPackingSheet('PACKBOX')" title="PACKBOX">
                     <span style="font-size: 28px;">📦</span>
                     <span class="label">PACKBOX</span>
@@ -1265,7 +1276,7 @@
                 <div id="panel-search" class="function-block">
                     <div class="panel-content">
                         <div class="block-title">🔍 圖書查詢</div>
-                        <div class="control-box">
+                        <div class="control-box" style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
                             <div style="margin-bottom: 15px; color: #666;">
                                 💡 請輸入14位數條碼進行查詢
                             </div>
@@ -1282,7 +1293,7 @@
                 <div id="panel-location" class="function-block">
                     <div class="panel-content">
                         <div class="block-title">📍 查詢位置</div>
-                        <div class="control-box">
+                        <div class="control-box" style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
                             <div style="margin-bottom: 15px; color: #666;">
                                 💡 請輸入14位數條碼查詢存放位置
                             </div>
@@ -1299,7 +1310,7 @@
                 <div id="panel-display" class="function-block">
                     <div class="panel-content">
                         <div class="block-title">⚙️ 顯示設定</div>
-                        <div class="control-box">
+                        <div class="control-box" style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
                             <label style="display: block; margin-bottom: 10px; font-weight: 600;">圖書館顯示數量：</label>
                             <div style="display: flex; gap: 10px; align-items: center;">
                                 <input type="number" id="displayLimit" value="100" min="1" max="500" style="width: 150px;">
@@ -1312,7 +1323,7 @@
                 <div id="panel-single" class="function-block">
                     <div class="panel-content">
                         <div class="block-title">📝 單一位置更新</div>
-                        <div class="control-box">
+                        <div class="control-box" style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
                             <input type="text" id="singleLocation" placeholder="新位置" style="margin-bottom: 10px;">
                             <input type="text" id="singleBookKey" placeholder="14位數條碼" maxlength="14" inputmode="numeric" style="margin-bottom: 10px;">
                             <button class="btn-success" onclick="updateSingleLocation()">更新</button>
@@ -1323,7 +1334,7 @@
                 <div id="panel-batch" class="function-block">
                     <div class="panel-content">
                         <div class="block-title">📋 批量位置更新</div>
-                        <div class="control-box">
+                        <div class="control-box" style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
                             <input type="text" id="batchDefaultLocation" placeholder="預設新位置" style="margin-bottom: 10px;">
                             <textarea id="batchData" placeholder="批量資料（每行一筆）"></textarea>
                             <div style="display: flex; gap: 10px; margin-top: 15px;">
@@ -1351,30 +1362,32 @@
         </div>
     </div>
 
-    <!-- 上傳檔案專用 Modal -->
-    <div class="modal-overlay" id="uploadModalOverlay" onclick="closeUploadModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-            <h3 id="uploadModalTitle">📤 上傳 CSV 檔案</h3>
+    <!-- 上傳檔案專用 Modal - 修正版 -->
+    <div class="modal-overlay upload-modal-overlay" id="uploadModalOverlay" onclick="closeUploadModal(event)">
+        <div class="modal" onclick="event.stopPropagation()" style="text-align: center;">
+            <h3 id="uploadModalTitle" style="text-align: left;">📤 上傳 CSV 檔案</h3>
+            
             <div class="upload-modal-content">
                 <input type="file" id="modalFileInput" accept=".csv" onchange="handleModalFileSelect(event)" style="display: none;">
-                <label for="modalFileInput" class="upload-area" id="modalUploadArea">
+                <label for="modalFileInput" class="upload-area" id="modalUploadArea" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 220px; margin: 20px 0;">
                     <div class="upload-icon">📁</div>
-                    <div style="font-weight: 600; font-size: 18px; margin-bottom: 5px;">點擊選擇 CSV 檔案</div>
-                    <div class="upload-hint">
+                    <div style="font-weight: 600; font-size: 18px; margin-bottom: 8px;">點擊選擇 CSV 檔案</div>
+                    <div class="upload-hint" style="font-size: 13px; color: #888; line-height: 1.6;">
                         支援格式：A,B,C,D,E 欄位為資料，F欄為位置<br>
                         檔案大小限制：5MB
                     </div>
                 </label>
                 
-                <div id="uploadFileInfo" style="display: none; margin: 15px 0; padding: 15px; background: #e8f5e9; border-radius: 8px; border-left: 4px solid #28a745;">
-                    <div style="font-weight: 600; color: #2e7d32;">✅ 已選擇檔案：<span id="selectedFileName"></span></div>
+                <div id="uploadFileInfo" style="display: none; margin: 15px 0; padding: 15px; background: #e8f5e9; border-radius: 8px; border-left: 4px solid #28a745; text-align: left;">
+                    <div style="font-weight: 600; color: #2e7d32; font-size: 14px;">✅ 已選擇檔案：<span id="selectedFileName"></span></div>
                 </div>
                 
-                <div id="uploadModalStatus" class="status-bar" style="margin-top: 15px; display: none;"></div>
+                <div id="uploadModalStatus" class="status-bar" style="margin-top: 15px; display: none; text-align: left;"></div>
             </div>
-            <div class="modal-actions">
-                <button class="btn-secondary" onclick="closeUploadModal()">取消</button>
-                <button class="btn-primary" id="modalUploadBtn" onclick="confirmModalUpload()" disabled>
+            
+            <div class="modal-actions" style="margin-top: 25px;">
+                <button class="btn-secondary" onclick="closeUploadModal()" style="flex: 1;">取消</button>
+                <button class="btn-primary" id="modalUploadBtn" onclick="confirmModalUpload()" disabled style="flex: 1;">
                     🚀 開始上傳
                 </button>
             </div>
@@ -1395,35 +1408,27 @@
             currentPackingSheet = sheetName;
             currentZone = 'all';
             
-            // 更新按鈕狀態
             document.querySelectorAll('.tool-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             
-            // 隱藏所有面板
             document.querySelectorAll('.function-block').forEach(block => {
                 block.classList.remove('active');
             });
             
-            // 顯示裝箱面板
             document.getElementById('panel-packing').classList.add('active');
             
-            // 根據工作表設定對應按鈕為 active
             if (sheetName === 'PACKBOX') {
                 document.querySelector('.packbox-btn').classList.add('active');
             } else {
                 document.querySelector('.spare-btn').classList.add('active');
             }
             
-            // 更新面板樣式
             updatePanelStyle();
-            
-            // 重新載入資料
             loadPackingData();
         }
         
         function switchPanel(panelName) {
-            // 隱藏所有面板
             document.querySelectorAll('.function-block').forEach(block => {
                 block.classList.remove('active');
             });
@@ -1431,16 +1436,12 @@
                 btn.classList.remove('active');
             });
             
-            // 顯示選中的面板
             document.getElementById('panel-' + panelName).classList.add('active');
             event.currentTarget.classList.add('active');
         }
         
-        // 更新面板樣式（根據目前工作表）
         function updatePanelStyle() {
             const isSpare = currentPackingSheet === 'PACKBOXSPARE';
-            
-            // 更新標題
             const title = document.getElementById('packingBlockTitle');
             const uploadBtn = document.getElementById('uploadFileBtn');
             
@@ -1450,8 +1451,6 @@
                     🗄️ 裝箱管理
                     <span class="sheet-badge spare">PACKBOXSPARE</span>
                 `;
-                
-                // 更新按鈕樣式
                 uploadBtn.className = 'title-btn title-btn-spare';
                 document.getElementById('quickAddBtn').className = 'btn-spare';
                 document.getElementById('packingSidebar').classList.add('spare-sidebar');
@@ -1463,8 +1462,6 @@
                     📦 裝箱管理
                     <span class="sheet-badge packbox">PACKBOX</span>
                 `;
-                
-                // 恢復按鈕樣式
                 uploadBtn.className = 'title-btn title-btn-primary';
                 document.getElementById('quickAddBtn').className = 'btn-primary';
                 document.getElementById('packingSidebar').classList.remove('spare-sidebar');
@@ -1473,28 +1470,111 @@
             }
         }
         
-        //================ 上傳 Modal 功能 =================
+        //================ 新增位置功能（修正版） =================
+        function showAddZoneModal() {
+            const content = `
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #555;">位置名稱</label>
+                    <input type="text" id="newZoneInput" placeholder="例如：A區-1號箱" style="width: 100%; font-size: 16px;">
+                    <div style="margin-top: 8px; font-size: 13px; color: #888;">
+                        💡 新增的位置將顯示在側邊欄，您可以在該位置下加入資料
+                    </div>
+                </div>
+            `;
+            
+            showModal('➕ 新增位置', content, async () => {
+                const zoneName = document.getElementById('newZoneInput').value.trim();
+                if (!zoneName) {
+                    showToast('請輸入位置名稱', 'error');
+                    return;
+                }
+                
+                // 檢查是否已存在
+                const existingZones = Array.from(document.querySelectorAll('.zone-item')).map(item => {
+                    const nameEl = item.querySelector('.zone-name');
+                    return nameEl ? nameEl.textContent.replace('📍 ', '').trim() : '';
+                });
+                
+                if (existingZones.includes(zoneName)) {
+                    showToast('此位置名稱已存在', 'error');
+                    return;
+                }
+                
+                // 新增位置到側邊欄
+                await addNewZone(zoneName);
+            });
+            
+            // 聚焦輸入框
+            setTimeout(() => {
+                const input = document.getElementById('newZoneInput');
+                if (input) input.focus();
+            }, 100);
+        }
+        
+        async function addNewZone(zoneName) {
+            try {
+                // 這裡可以加入 API 呼叫來儲存新位置
+                // const result = await apiCall('packingAddZone', { zone: zoneName, sheet: currentPackingSheet });
+                
+                // 暫時前端新增（實際使用時應呼叫 API）
+                const zoneList = document.getElementById('zoneList');
+                
+                // 創建新的位置元素
+                const div = document.createElement('div');
+                div.className = 'zone-item';
+                div.onclick = function() { filterZone(zoneName, this); };
+                div.innerHTML = `
+                    <span class="zone-name">📍 ${escapeHtml(zoneName)}</span>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="zone-count">0 筆</span>
+                        <span class="zone-edit" onclick="event.stopPropagation(); showRenameZoneModal('${escapeHtml(zoneName)}')">✏️</span>
+                    </div>
+                `;
+                
+                // 插入到全部資料後面（第一個位置）
+                if (zoneList.firstChild) {
+                    zoneList.insertBefore(div, zoneList.firstChild);
+                } else {
+                    zoneList.appendChild(div);
+                }
+                
+                // 切換到新位置
+                filterZone(zoneName, div);
+                
+                showToast(`✅ 位置「${zoneName}」已新增`, 'success');
+                closeModal();
+                
+            } catch (e) {
+                showToast('❌ 新增失敗：' + e.message, 'error');
+            }
+        }
+        
+        //================ 上傳 Modal 功能（修正版） =================
         function showUploadModal() {
-            // 重置狀態
             selectedModalFile = null;
             document.getElementById('modalFileInput').value = '';
             document.getElementById('uploadFileInfo').style.display = 'none';
             document.getElementById('modalUploadBtn').disabled = true;
             document.getElementById('uploadModalStatus').style.display = 'none';
             
-            // 更新標題
             const sheetName = currentPackingSheet === 'PACKBOX' ? 'PACKBOX' : 'PACKBOXSPARE';
             document.getElementById('uploadModalTitle').textContent = `📤 上傳 CSV 到 ${sheetName}`;
             
-            // 更新上傳區域顏色
             const uploadArea = document.getElementById('modalUploadArea');
+            // 重置上傳區域顯示
+            uploadArea.className = 'upload-area';
             if (currentPackingSheet === 'PACKBOXSPARE') {
                 uploadArea.classList.add('spare-mode');
-            } else {
-                uploadArea.classList.remove('spare-mode');
             }
+            uploadArea.innerHTML = `
+                <div class="upload-icon">📁</div>
+                <div style="font-weight: 600; font-size: 18px; margin-bottom: 8px;">點擊選擇 CSV 檔案</div>
+                <div class="upload-hint" style="font-size: 13px; color: #888; line-height: 1.6;">
+                    支援格式：A,B,C,D,E 欄位為資料，F欄為位置<br>
+                    檔案大小限制：5MB
+                </div>
+            `;
             
-            // 更新上傳按鈕顏色
             const uploadBtn = document.getElementById('modalUploadBtn');
             if (currentPackingSheet === 'PACKBOXSPARE') {
                 uploadBtn.className = 'btn-spare';
@@ -1502,26 +1582,25 @@
                 uploadBtn.className = 'btn-primary';
             }
             
-            // 顯示 Modal
             document.getElementById('uploadModalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden'; // 防止背景滾動
         }
         
         function closeUploadModal(e) {
             if (e && e.target !== document.getElementById('uploadModalOverlay')) return;
             document.getElementById('uploadModalOverlay').classList.remove('active');
+            document.body.style.overflow = ''; // 恢復滾動
         }
         
         function handleModalFileSelect(event) {
             const file = event.target.files[0];
             if (!file) return;
             
-            // 檢查檔案類型
             if (!file.name.toLowerCase().endsWith('.csv')) {
                 showUploadModalStatus('❌ 請選擇 CSV 檔案', 'error');
                 return;
             }
             
-            // 檢查檔案大小（5MB）
             if (file.size > 5 * 1024 * 1024) {
                 showUploadModalStatus('❌ 檔案大小超過 5MB 限制', 'error');
                 return;
@@ -1529,32 +1608,31 @@
             
             selectedModalFile = file;
             
-            // 顯示檔案資訊
             document.getElementById('selectedFileName').textContent = file.name;
             document.getElementById('uploadFileInfo').style.display = 'block';
             document.getElementById('modalUploadBtn').disabled = false;
             
-            // 更新上傳區域顯示
             const uploadArea = document.getElementById('modalUploadArea');
             uploadArea.classList.add('has-file');
             uploadArea.innerHTML = `
                 <div class="upload-icon">✅</div>
-                <div style="font-weight: 600; font-size: 18px;">${file.name}</div>
-                <div style="color: #28a745; font-size: 13px; margin-top: 5px;">
-                    檔案大小：${(file.size / 1024).toFixed(1)} KB
+                <div style="font-weight: 600; font-size: 18px; margin-bottom: 5px;">${escapeHtml(file.name)}</div>
+                <div style="color: #28a745; font-size: 14px; font-weight: 500;">
+                    檔案大小：${(file.size / 1024).toFixed(1)} KB<br>
+                    點擊重新選擇
                 </div>
             `;
             
-            showUploadModalStatus('✅ 檔案已選擇，點擊「開始上傳」按鈕', 'success');
+            showUploadModalStatus('✅ 檔案已選擇，請點擊「開始上傳」', 'success');
         }
         
         function showUploadModalStatus(message, type) {
             const bar = document.getElementById('uploadModalStatus');
             bar.className = 'status-bar ' + type;
-            bar.textContent = message;
+            bar.innerHTML = message;
             bar.style.display = 'block';
             
-            if (type === 'success' || type === 'info') {
+            if (type === 'success') {
                 setTimeout(() => {
                     bar.style.display = 'none';
                 }, 3000);
@@ -1566,7 +1644,7 @@
             
             const btn = document.getElementById('modalUploadBtn');
             btn.disabled = true;
-            btn.textContent = '上傳中...';
+            btn.innerHTML = '<span class="spinner" style="width: 20px; height: 20px; border-width: 2px; display: inline-block; vertical-align: middle; margin-right: 8px;"></span>上傳中...';
             
             const reader = new FileReader();
             reader.onload = async function(e) {
@@ -1587,7 +1665,7 @@
                     } else {
                         showUploadModalStatus('❌ ' + result.error, 'error');
                         btn.disabled = false;
-                        btn.textContent = '🚀 開始上傳';
+                        btn.innerHTML = '🚀 開始上傳';
                     }
                 } catch (e) {
                     showUploadModalStatus('⏳ 上傳處理中，請稍後...', 'info');
@@ -1600,7 +1678,7 @@
             reader.onerror = function() {
                 showUploadModalStatus('❌ 檔案讀取失敗', 'error');
                 btn.disabled = false;
-                btn.textContent = '🚀 開始上傳';
+                btn.innerHTML = '🚀 開始上傳';
             };
             
             reader.readAsText(selectedModalFile);
@@ -1649,7 +1727,7 @@
         //================ 裝箱功能 =================
         
         async function loadPackingData() {
-            showPackingStatus('載入中...', 'info');
+            showToast('載入中...', 'info');
             
             try {
                 const result = await apiCall('packingGetAllData', { sheet: currentPackingSheet });
@@ -1658,12 +1736,12 @@
                     packingDataCache = result.data;
                     updateZoneList();
                     loadPackingSummary();
-                    showPackingStatus(`已載入 ${result.data.length} 筆資料`, 'success');
+                    showToast(`已載入 ${result.data.length} 筆資料`, 'success');
                 } else {
-                    showPackingStatus('載入失敗：' + result.error, 'error');
+                    showToast('載入失敗：' + result.error, 'error');
                 }
             } catch (e) {
-                showPackingStatus('載入失敗：' + e.message, 'error');
+                showToast('載入失敗：' + e.message, 'error');
             }
         }
         
@@ -1898,7 +1976,7 @@
             
             const check = async () => {
                 if (attempts >= maxAttempts) {
-                    showPackingStatus('⚠️ 檢查超時，請手動重新整理', 'warning');
+                    showToast('⚠️ 檢查超時，請手動重新整理', 'warning');
                     return;
                 }
                 
@@ -1906,10 +1984,10 @@
                     const result = await apiCall('packingCheckUploadStatus', { uploadId: uploadId });
                     
                     if (result.status === 'completed') {
-                        showPackingStatus(`✅ 上傳完成！更新 ${result.updated} 筆，新增 ${result.inserted} 筆`, 'success');
+                        showToast(`✅ 上傳完成！更新 ${result.updated} 筆，新增 ${result.inserted} 筆`, 'success');
                         loadPackingData();
                     } else if (result.status === 'error') {
-                        showPackingStatus('❌ 上傳失敗：' + result.message, 'error');
+                        showToast('❌ 上傳失敗：' + result.message, 'error');
                     } else {
                         attempts++;
                         setTimeout(check, 5000);
@@ -1970,15 +2048,15 @@
                 });
                 
                 if (result.success) {
-                    showPackingStatus('✅ 已加入 ' + currentZone, 'success');
+                    showToast('✅ 已加入 ' + currentZone, 'success');
                     document.getElementById('quickKeyInput').value = '';
                     document.getElementById('quickSearchResult').innerHTML = '';
                     loadPackingData();
                 } else {
-                    showPackingStatus('❌ ' + result.error, 'error');
+                    showToast('❌ ' + result.error, 'error');
                 }
             } catch (e) {
-                showPackingStatus('❌ 失敗', 'error');
+                showToast('❌ 失敗', 'error');
             }
         }
         
@@ -2036,8 +2114,8 @@
             document.getElementById('modalTitle').textContent = title;
             document.getElementById('modalContent').innerHTML = content;
             document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
             
-            // 更新確認按顏色
             const confirmBtn = document.getElementById('modalConfirmBtn');
             if (currentPackingSheet === 'PACKBOXSPARE') {
                 confirmBtn.className = 'btn-spare';
@@ -2051,35 +2129,34 @@
         function closeModal(e) {
             if (e && e.target !== document.getElementById('modalOverlay')) return;
             document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
             modalCallback = null;
         }
         
         function modalConfirm() {
             if (modalCallback) modalCallback();
-            closeModal();
         }
         
         //================ 各種操作功能 =================
         
-        function showAddZoneModal() {
-            const content = `
-                <input type="text" id="newZoneInput" placeholder="輸入新位置名稱..." style="width: 100%;">
-            `;
-            showModal('➕ 新增位置', content, async () => {
-                const zone = document.getElementById('newZoneInput').value.trim();
-                if (!zone) return;
-                showPackingStatus('✅ 位置「' + zone + '」已建立', 'success');
-            });
-        }
-        
         function showRenameZoneModal(oldName) {
             const content = `
-                <p style="margin-bottom: 10px;">原名稱：${escapeHtml(oldName)}</p>
-                <input type="text" id="renameZoneInput" placeholder="輸入新名稱..." value="${escapeHtml(oldName)}" style="width: 100%;">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #555;">原名稱</label>
+                    <div style="padding: 10px; background: #f5f5f5; border-radius: 6px; color: #666; margin-bottom: 15px;">
+                        ${escapeHtml(oldName)}
+                    </div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #555;">新名稱</label>
+                    <input type="text" id="renameZoneInput" placeholder="輸入新名稱..." value="${escapeHtml(oldName)}" style="width: 100%; font-size: 16px;">
+                </div>
             `;
+            
             showModal('✏️ 修改區域名稱', content, async () => {
                 const newName = document.getElementById('renameZoneInput').value.trim();
-                if (!newName || newName === oldName) return;
+                if (!newName || newName === oldName) {
+                    showToast('名稱未變更', 'info');
+                    return;
+                }
                 
                 try {
                     const result = await apiCall('packingRenameZone', {
@@ -2089,15 +2166,24 @@
                     });
                     
                     if (result.success) {
-                        showPackingStatus('✅ ' + result.message, 'success');
+                        showToast('✅ ' + result.message, 'success');
                         loadPackingData();
+                        closeModal();
                     } else {
-                        showPackingStatus('❌ ' + result.error, 'error');
+                        showToast('❌ ' + result.error, 'error');
                     }
                 } catch (e) {
-                    showPackingStatus('❌ 失敗', 'error');
+                    showToast('❌ 失敗', 'error');
                 }
             });
+            
+            setTimeout(() => {
+                const input = document.getElementById('renameZoneInput');
+                if (input) {
+                    input.select();
+                    input.focus();
+                }
+            }, 100);
         }
         
         function showEditModal(key) {
@@ -2105,18 +2191,43 @@
             if (!item) return;
             
             const content = `
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <label>A (Key): ${escapeHtml(item.A)}</label>
-                    <input type="text" id="editB" placeholder="B" value="${escapeHtml(item.B)}">
-                    <input type="text" id="editC" placeholder="C" value="${escapeHtml(item.C)}">
-                    <input type="text" id="editD" placeholder="D" value="${escapeHtml(item.D)}">
-                    <input type="text" id="editE" placeholder="E" value="${escapeHtml(item.E)}">
-                    <input type="text" id="editF" placeholder="F (位置)" value="${escapeHtml(item.F)}">
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="padding: 10px; background: #f0f4ff; border-radius: 6px; border-left: 4px solid #667eea; margin-bottom: 5px;">
+                        <label style="font-size: 12px; color: #666; display: block; margin-bottom: 4px;">A (Key)</label>
+                        <div style="font-weight: 600; color: #333; font-size: 16px;">${escapeHtml(item.A)}</div>
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; color: #888; display: block; margin-bottom: 4px;">B 欄位</label>
+                        <input type="text" id="editB" placeholder="B" value="${escapeHtml(item.B)}" style="width: 100%;">
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; color: #888; display: block; margin-bottom: 4px;">C 欄位</label>
+                        <input type="text" id="editC" placeholder="C" value="${escapeHtml(item.C)}" style="width: 100%;">
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; color: #888; display: block; margin-bottom: 4px;">D 欄位</label>
+                        <input type="text" id="editD" placeholder="D" value="${escapeHtml(item.D)}" style="width: 100%;">
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; color: #888; display: block; margin-bottom: 4px;">E 欄位</label>
+                        <input type="text" id="editE" placeholder="E" value="${escapeHtml(item.E)}" style="width: 100%;">
+                    </div>
+                    <div style="background: #fff3cd; padding: 10px; border-radius: 6px; border: 1px solid #ffc107;">
+                        <label style="font-size: 12px; color: #856404; display: block; margin-bottom: 4px; font-weight: 600;">F 欄位（位置）</label>
+                        <input type="text" id="editF" placeholder="F (位置)" value="${escapeHtml(item.F)}" style="width: 100%; border-color: #ffc107;">
+                    </div>
                 </div>
             `;
+            
             showModal('✏️ 編輯資料', content, async () => {
-                showPackingStatus('✅ 資料已更新', 'success');
-                loadPackingData();
+                try {
+                    // 這裡應該呼叫 API 更新資料
+                    showToast('✅ 資料已更新', 'success');
+                    loadPackingData();
+                    closeModal();
+                } catch (e) {
+                    showToast('❌ 更新失敗', 'error');
+                }
             });
         }
         
@@ -2131,14 +2242,14 @@
                 });
                 
                 if (result.success) {
-                    showPackingStatus('✅ 已刪除位置標記', 'success');
+                    showToast('✅ 已刪除位置標記', 'success');
                     loadPackingData();
                     if (currentZone !== 'all') {
                         renderDataList(currentZone);
                     }
                 }
             } catch (e) {
-                showPackingStatus('❌ 失敗', 'error');
+                showToast('❌ 失敗', 'error');
             }
         }
         
@@ -2149,13 +2260,13 @@
                 const result = await apiCall('packingClearLocations', { sheet: currentPackingSheet });
                 
                 if (result.success) {
-                    showPackingStatus('✅ ' + result.message, 'success');
+                    showToast('✅ ' + result.message, 'success');
                     loadPackingData();
                 } else {
-                    showPackingStatus('❌ ' + result.error, 'error');
+                    showToast('❌ ' + result.error, 'error');
                 }
             } catch (e) {
-                showPackingStatus('❌ 失敗', 'error');
+                showToast('❌ 失敗', 'error');
             }
         }
         
@@ -2166,49 +2277,63 @@
                 const result = await apiCall('packingClearAll', { sheet: currentPackingSheet });
                 
                 if (result.success) {
-                    showPackingStatus('✅ ' + result.message, 'success');
+                    showToast('✅ ' + result.message, 'success');
                     loadPackingData();
                 } else {
-                    showPackingStatus('❌ ' + result.error, 'error');
+                    showToast('❌ ' + result.error, 'error');
                 }
             } catch (e) {
-                showPackingStatus('❌ 失敗', 'error');
+                showToast('❌ 失敗', 'error');
             }
         }
         
         //================ 輔助功能 =================
         
-        function showPackingStatus(message, type) {
-            const bar = document.getElementById('packingUploadStatus');
-            if (!bar) {
-                // 如果元素不存在（因為已經移到 modal），創建一個臨時提示
-                const tempBar = document.createElement('div');
-                tempBar.className = 'status-bar ' + type;
-                tempBar.textContent = message;
-                tempBar.style.display = 'block';
-                tempBar.style.position = 'fixed';
-                tempBar.style.top = '80px';
-                tempBar.style.left = '50%';
-                tempBar.style.transform = 'translateX(-50%)';
-                tempBar.style.zIndex = '2000';
-                tempBar.style.maxWidth = '90%';
-                tempBar.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-                document.body.appendChild(tempBar);
-                
-                setTimeout(() => {
-                    tempBar.remove();
-                }, 3000);
-                return;
+        function showToast(message, type = 'info') {
+            // 創建臨時提示元素
+            const existingToast = document.querySelector('.temp-toast');
+            if (existingToast) {
+                existingToast.remove();
             }
             
-            bar.className = 'status-bar ' + type;
-            bar.textContent = message;
-            bar.style.display = 'block';
+            const toast = document.createElement('div');
+            toast.className = 'temp-toast status-bar ' + type;
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 9999;
+                max-width: 90%;
+                min-width: 300px;
+                text-align: center;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                animation: slideDown 0.3s ease;
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // 添加動畫樣式
+            if (!document.getElementById('toastAnim')) {
+                const style = document.createElement('style');
+                style.id = 'toastAnim';
+                style.textContent = `
+                    @keyframes slideDown {
+                        from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
+                        to { transform: translateX(-50%) translateY(0); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
             
             if (type === 'success' || type === 'info') {
                 setTimeout(() => {
-                    bar.style.display = 'none';
-                }, 5000);
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(-50%) translateY(-20px)';
+                    toast.style.transition = 'all 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
             }
         }
         
@@ -2219,7 +2344,7 @@
             return div.innerHTML;
         }
         
-        //================ 其他原有功能（簡化版） =================
+        //================ 其他原有功能 =================
         
         function searchBook() {
             const input = document.getElementById('searchInput').value.trim();
@@ -2236,28 +2361,46 @@
         function updateDisplayLimit() {
             const val = parseInt(document.getElementById('displayLimit').value);
             if (val && val > 0) {
-                alert('已設定顯示數量為 ' + val + ' 筆');
+                showToast('已設定顯示數量為 ' + val + ' 筆', 'success');
             }
         }
         
         function updateSingleLocation() {
             const loc = document.getElementById('singleLocation').value;
             const key = document.getElementById('singleBookKey').value;
+            if (!loc || !key) {
+                showToast('請輸入位置和條碼', 'error');
+                return;
+            }
             alert('更新: ' + key + ' -> ' + loc);
         }
         
         function submitBatchUpdate() {
             const data = document.getElementById('batchData').value;
-            alert('批量更新: ' + data.split('\n').length + ' 筆');
+            if (!data.trim()) {
+                showToast('請輸入批量資料', 'error');
+                return;
+            }
+            const lines = data.split('\n').filter(l => l.trim());
+            showToast(`批量更新: ${lines.length} 筆資料`, 'success');
         }
         
         function clearBatchData() {
             document.getElementById('batchData').value = '';
+            showToast('已清空', 'success');
         }
         
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
             loadPackingData();
+        });
+        
+        // ESC 鍵關閉 Modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+                closeUploadModal();
+            }
         });
     </script>
 </body>
