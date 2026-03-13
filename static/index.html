@@ -1943,8 +1943,7 @@
         //================ 初始化 =================
         document.addEventListener('DOMContentLoaded', function() {
             loadManualSelect();
-            loadPackingData();
-
+            
             // 輸入框事件綁定
             document.getElementById('searchInput')?.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') searchBook();
@@ -1971,6 +1970,7 @@
                 }
             });
 
+            // 預載資料但不在此切換面板
             setTimeout(preloadAllData, 1000);
         });
 
@@ -2100,14 +2100,11 @@
 
             updatePanelStyle();
 
-            if (fullDataCache[sheetName]) {
-                packingDataCache = fullDataCache[sheetName];
-                updateZoneList();
-                loadPackingSummary();
-                showToast(`已切換到 ${sheetName} (使用快取)`, 'success');
-            } else {
-                loadPackingData();
-            }
+            // 載入資料並確保正確初始化視圖
+            loadPackingData().then(() => {
+                // 確保載入後顯示全部資料總覽
+                backToSummary();
+            });
         }
 
         function updatePanelStyle() {
@@ -2831,11 +2828,7 @@
                 if (packboxResult.success) fullDataCache['PACKBOX'] = packboxResult.data;
                 if (spareResult.success) fullDataCache['PACKBOXSPARE'] = spareResult.data;
 
-                if (fullDataCache[currentPackingSheet]) {
-                    packingDataCache = fullDataCache[currentPackingSheet];
-                    updateZoneList();
-                    loadPackingSummary();
-                }
+                // 不自動切換到裝箱面板，只快取資料
             } catch (e) {
                 console.error('快取載入失敗:', e);
             }
@@ -2849,16 +2842,25 @@
                 ]);
 
                 if (dataResult.success) {
-                    packingDataCache = dataResult.data;
+                    // 確保 packingDataCache 是獨立副本，避免與 fullDataCache 引用同一陣列
+                    packingDataCache = [...dataResult.data];
                     fullDataCache[currentPackingSheet] = dataResult.data;
                 }
 
                 if (zonesResult.success && zonesResult.zones) {
                     savedZones[currentPackingSheet] = zonesResult.zones;
+                } else {
+                    savedZones[currentPackingSheet] = [];
                 }
 
                 updateZoneList();
                 loadPackingSummary();
+                
+                // 如果當前在特定區域視圖，重新渲染該區域
+                if (currentZone !== 'all') {
+                    renderDataList(currentZone);
+                }
+                
                 showToast(`已載入 ${packingDataCache.length} 筆資料`, 'success');
             } catch (e) {
                 showToast('載入失敗：' + e.message, 'error');
@@ -3153,9 +3155,11 @@
                 if (foundData) {
                     await performQuickAdd(key, foundData);
 
+                    // 快速新增區域加入 A 欄位顯示（紅箭嘴位置）
                     resultDiv.innerHTML = `
                         <div class="quick-result-display">
                             <div class="quick-result-grid">
+                                <div class="quick-result-item"><label>A (Key)</label><value>${escapeHtml(foundData.A)}</value></div>
                                 <div class="quick-result-item"><label>B 欄</label><value>${escapeHtml(foundData.B) || '-'}</value></div>
                                 <div class="quick-result-item"><label>C 欄</label><value>${escapeHtml(foundData.C) || '-'}</value></div>
                                 <div class="quick-result-item"><label>D 欄</label><value>${escapeHtml(foundData.D) || '-'}</value></div>
@@ -3180,11 +3184,17 @@
 
         async function performQuickAdd(key, data) {
             try {
+                // 檢查 fullDataCache 和 packingDataCache 是否引用同一個陣列物件
+                const isSameArray = fullDataCache[currentPackingSheet] === packingDataCache;
+                
                 let targetItem = packingDataCache.find(item => item.A === key);
+                let isNewItem = false;
 
                 if (targetItem) {
+                    // 更新現有項目的 F 欄位
                     targetItem.F = currentZone;
                 } else {
+                    // 只有當資料真的不存在時才建立新項目
                     const newItem = {
                         A: key,
                         B: data.B || '',
@@ -3194,8 +3204,26 @@
                         F: currentZone
                     };
                     packingDataCache.push(newItem);
-                    if (!fullDataCache[currentPackingSheet]) fullDataCache[currentPackingSheet] = [];
-                    fullDataCache[currentPackingSheet].push(newItem);
+                    isNewItem = true;
+                }
+
+                // 同步更新 fullDataCache，避免重複推送（圓圈位置修正）
+                if (fullDataCache[currentPackingSheet]) {
+                    const cacheItem = fullDataCache[currentPackingSheet].find(item => item.A === key);
+                    if (cacheItem) {
+                        cacheItem.F = currentZone;
+                    } else if (isNewItem && !isSameArray) {
+                        // 只有在不是同一個陣列引用且是新項目時才推入 fullDataCache
+                        fullDataCache[currentPackingSheet].push({
+                            A: key,
+                            B: data.B || '',
+                            C: data.C || '',
+                            D: data.D || '',
+                            E: data.E || '',
+                            F: currentZone
+                        });
+                    }
+                    // 如果是同一個陣列引用，packingDataCache.push 已經同步更新了 fullDataCache，無需重複操作
                 }
 
                 await packingApiCall('packingSetLocation', {
@@ -3205,7 +3233,10 @@
                 });
 
                 updateZoneList();
-                if (currentZone !== 'all') renderDataList(currentZone);
+                // 如果在特定區域視圖，重新渲染列表以顯示新加入的資料
+                if (currentZone !== 'all') {
+                    renderDataList(currentZone);
+                }
                 loadPackingSummary();
             } catch (e) {
                 console.error('Perform quick add error:', e);
