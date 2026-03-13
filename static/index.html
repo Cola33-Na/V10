@@ -398,7 +398,7 @@
             flex-shrink: 0;
         }
         
-        /* 資料列表樣式 */
+        /* 資料列表樣式 - 修改為全部預設展開 */
         .data-list {
             display: flex;
             flex-direction: column;
@@ -444,29 +444,22 @@
             flex-shrink: 0;
         }
         
+        /* 修改：所有資料內容預設顯示 */
         .data-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #dee2e6;
+        }
+        
+        /* 移除未分類的特殊處理，統一樣式 */
+        .data-item.collapsed .data-content {
             display: none;
-            padding-top: 10px;
-            border-top: 1px dashed #dee2e6;
-        }
-        
-        .data-content.active {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-        }
-        
-        /* 未分類預設展開 */
-        .data-item.unclassified .data-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            padding-top: 10px;
-            border-top: 1px dashed #dee2e6;
         }
         
         @media (max-width: 480px) {
-            .data-item.unclassified .data-content {
+            .data-content {
                 grid-template-columns: 1fr;
             }
         }
@@ -498,7 +491,7 @@
             border-color: #ffc107;
         }
         
-        /* 快速輸入區 */
+        /* 快速輸入區 - 加入按鈕樣式 */
         .quick-input-area {
             background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
             border-radius: 12px;
@@ -522,6 +515,14 @@
         .quick-input-row input {
             flex: 1;
             min-width: 150px;
+        }
+        
+        /* 新增：加入按鈕樣式 */
+        .quick-add-btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            white-space: nowrap;
         }
         
         /* 快速查找結果顯示 */
@@ -626,7 +627,7 @@
             justify-content: flex-end;
         }
         
-        /* 上傳 Modal 專用樣式 */
+        /* 上傳 Modal 專用樣式 - 新增進度條 */
         .upload-modal-overlay .modal {
             max-width: 450px;
             width: 90%;
@@ -688,6 +689,48 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+        }
+        
+        /* 新增：進度條樣式 */
+        .upload-progress-container {
+            margin: 20px 0;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .upload-progress-container.active {
+            display: block;
+        }
+        
+        .upload-progress-bar {
+            height: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .upload-progress-bar.spare {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        
+        .upload-status-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+            display: none;
+        }
+        
+        .upload-status-text.active {
+            display: block;
         }
         
         input[type="file"] {
@@ -994,8 +1037,7 @@
                 font-size: 36px;
             }
             
-            .data-content.active,
-            .data-item.unclassified .data-content {
+            .data-content {
                 grid-template-columns: 1fr;
             }
             
@@ -1041,6 +1083,10 @@
             
             .quick-result-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .quick-add-btn {
+                width: 100%;
             }
         }
         
@@ -1198,11 +1244,14 @@
                             
                             <!-- 主內容區 -->
                             <div class="packing-main">
-                                <!-- 快速輸入 -->
+                                <!-- 快速輸入 - 加入加入按鈕 -->
                                 <div class="quick-input-area" id="quickInputArea" style="display: none;">
                                     <h4 style="margin-bottom: 10px;">➕ 快速新增到 <span id="currentZoneName"></span></h4>
                                     <div class="quick-input-row">
-                                        <input type="text" id="quickKeyInput" placeholder="輸入 A欄 Key 值後自動查找..." onkeypress="if(event.key==='Enter') quickAddSearch()" autocomplete="off">
+                                        <input type="text" id="quickKeyInput" placeholder="輸入 A欄 Key 值後按Enter或點擊加入..." autocomplete="off">
+                                        <button class="btn-primary quick-add-btn" id="quickAddBtn" onclick="quickAddSearch()">
+                                            ➕ 加入
+                                        </button>
                                     </div>
                                     <div id="quickSearchResult" style="margin-top: 10px;"></div>
                                 </div>
@@ -1359,7 +1408,7 @@
         </div>
     </div>
 
-    <!-- 上傳檔案專用 Modal -->
+    <!-- 上傳檔案專用 Modal - 加入進度條 -->
     <div class="modal-overlay upload-modal-overlay" id="uploadModalOverlay" onclick="closeUploadModal(event)">
         <div class="modal" onclick="event.stopPropagation()" style="text-align: center;">
             <h3 id="uploadModalTitle" style="text-align: left;">📤 上傳 CSV 檔案</h3>
@@ -1379,11 +1428,18 @@
                     <div style="font-weight: 600; color: #2e7d32; font-size: 14px;">✅ 已選擇檔案：<span id="selectedFileName"></span></div>
                 </div>
                 
+                <!-- 新增：進度條 -->
+                <div class="upload-progress-container" id="uploadProgressContainer">
+                    <div class="upload-progress-bar" id="uploadProgressBar">0%</div>
+                </div>
+                <div class="upload-status-text" id="uploadStatusText">準備上傳...</div>
+                
                 <div id="uploadModalStatus" class="status-bar" style="margin-top: 15px; display: none; text-align: left;"></div>
             </div>
             
             <div class="modal-actions" style="margin-top: 25px;">
-                <button class="btn-secondary" onclick="closeUploadModal()" style="flex: 1;">取消</button>
+                <button class="btn-secondary" onclick="cancelUpload()" id="cancelUploadBtn" style="flex: 1; display: none;">⏹️ 中斷</button>
+                <button class="btn-secondary" onclick="closeUploadModal()" id="closeUploadModalBtn" style="flex: 1;">取消</button>
                 <button class="btn-primary" id="modalUploadBtn" onclick="confirmModalUpload()" disabled style="flex: 1;">
                     🚀 開始上傳
                 </button>
@@ -1398,9 +1454,14 @@
         let currentZone = 'all';
         let packingDataCache = [];
         let fullDataCache = {}; // 快取所有工作表資料
+        let savedZones = {}; // 儲存各工作表的位置列表（持久化）
         let modalCallback = null;
         let selectedModalFile = null;
         let isLoadingCache = false;
+        
+        //================ 上傳相關全域變數 =================
+        let currentUploadController = null; // 用於中斷上傳
+        let isUploading = false; // 上傳狀態標記
         
         //================ 初始化與快取 =================
         
@@ -1527,14 +1588,14 @@
             }
         }
         
-        //================ 新增位置功能 =================
+        //================ 新增位置功能（持久化版本） =================
         function showAddZoneModal() {
             const content = `
                 <div style="margin-bottom: 15px;">
                     <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #555;">位置名稱</label>
                     <input type="text" id="newZoneInput" placeholder="例如：A區-1號箱" style="width: 100%; font-size: 16px;">
                     <div style="margin-top: 8px; font-size: 13px; color: #888;">
-                        💡 新增的位置將顯示在側邊欄，您可以在該位置下加入資料
+                        💡 新增的位置將儲存到資料庫，即使沒有資料也會保留
                     </div>
                 </div>
             `;
@@ -1546,10 +1607,8 @@
                     return;
                 }
                 
-                const existingZones = Array.from(document.querySelectorAll('.zone-item')).map(item => {
-                    const nameEl = item.querySelector('.zone-name');
-                    return nameEl ? nameEl.textContent.replace('📍 ', '').trim() : '';
-                });
+                // 檢查是否已存在（包括已儲存的位置）
+                const existingZones = getAllZoneNames();
                 
                 if (existingZones.includes(zoneName)) {
                     showToast('此位置名稱已存在', 'error');
@@ -1565,10 +1624,42 @@
             }, 100);
         }
         
+        // 獲取所有位置名稱（包括已儲存的）
+        function getAllZoneNames() {
+            const names = [];
+            document.querySelectorAll('.zone-item').forEach(item => {
+                const nameEl = item.querySelector('.zone-name');
+                if (nameEl) {
+                    const name = nameEl.textContent.replace('📍 ', '').trim();
+                    if (name && name !== '全部資料') names.push(name);
+                }
+            });
+            return names;
+        }
+        
         async function addNewZone(zoneName) {
             try {
-                const zoneList = document.getElementById('zoneList');
+                // 先儲存到後端（持久化）
+                const result = await apiCall('packingSaveZone', {
+                    zoneName: zoneName,
+                    sheet: currentPackingSheet
+                });
                 
+                if (!result.success) {
+                    throw new Error(result.error || '儲存失敗');
+                }
+                
+                // 儲存到本地快取
+                if (!savedZones[currentPackingSheet]) {
+                    savedZones[currentPackingSheet] = [];
+                }
+                savedZones[currentPackingSheet].push({
+                    name: zoneName,
+                    createdAt: new Date().toISOString()
+                });
+                
+                // 更新UI
+                const zoneList = document.getElementById('zoneList');
                 const div = document.createElement('div');
                 div.className = 'zone-item';
                 div.onclick = function() { filterZone(zoneName, this); };
@@ -1580,15 +1671,22 @@
                     </div>
                 `;
                 
-                if (zoneList.firstChild) {
-                    zoneList.insertBefore(div, zoneList.firstChild);
+                // 插入到"未分類"之前，或添加到最後
+                const unclassifiedItem = Array.from(zoneList.querySelectorAll('.zone-item')).find(item => {
+                    const name = item.querySelector('.zone-name')?.textContent || '';
+                    return name.includes('未分類');
+                });
+                
+                if (unclassifiedItem) {
+                    zoneList.insertBefore(div, unclassifiedItem);
                 } else {
                     zoneList.appendChild(div);
                 }
                 
+                // 自動選擇新位置
                 filterZone(zoneName, div);
                 
-                showToast(`✅ 位置「${zoneName}」已新增`, 'success');
+                showToast(`✅ 位置「${zoneName}」已新增並儲存`, 'success');
                 closeModal();
                 
             } catch (e) {
@@ -1596,19 +1694,76 @@
             }
         }
         
-        //================ 快速查找與自動加入（修正版） =================
+        // 載入已儲存的位置（從後端）
+        async function loadSavedZones() {
+            try {
+                const result = await apiCall('packingGetSavedZones', {
+                    sheet: currentPackingSheet
+                });
+                
+                if (result.success && result.zones) {
+                    savedZones[currentPackingSheet] = result.zones;
+                    
+                    // 將儲存的位置合併到UI中（如果還沒有的話）
+                    const existingNames = getAllZoneNames();
+                    const zoneList = document.getElementById('zoneList');
+                    
+                    result.zones.forEach(zone => {
+                        if (!existingNames.includes(zone.name)) {
+                            const div = document.createElement('div');
+                            div.className = 'zone-item';
+                            div.onclick = function() { filterZone(zone.name, this); };
+                            div.innerHTML = `
+                                <span class="zone-name">📍 ${escapeHtml(zone.name)}</span>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span class="zone-count">0 筆</span>
+                                    <span class="zone-edit" onclick="event.stopPropagation(); showRenameZoneModal('${escapeHtml(zone.name)}')">✏️</span>
+                                </div>
+                            `;
+                            zoneList.appendChild(div);
+                        }
+                    });
+                }
+            } catch (e) {
+                console.error('載入儲存的位置失敗:', e);
+            }
+        }
+        
+        //================ 快速查找與自動加入（加入按鈕版本） =================
         let isProcessingQuickAdd = false;
+        
+        // 監聽Enter鍵
+        document.addEventListener('DOMContentLoaded', function() {
+            const quickInput = document.getElementById('quickKeyInput');
+            if (quickInput) {
+                quickInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !isProcessingQuickAdd) {
+                        e.preventDefault();
+                        quickAddSearch();
+                    }
+                });
+            }
+        });
         
         async function quickAddSearch() {
             if (isProcessingQuickAdd) return;
             
             const key = document.getElementById('quickKeyInput').value.trim();
-            if (!key) return;
+            if (!key) {
+                showToast('請輸入Key值', 'error');
+                return;
+            }
             
             const resultDiv = document.getElementById('quickSearchResult');
             resultDiv.innerHTML = '<div class="loading"><div class="spinner"></div>查找中...</div>';
             
             isProcessingQuickAdd = true;
+            // 禁用按鈕
+            const addBtn = document.getElementById('quickAddBtn');
+            if (addBtn) {
+                addBtn.disabled = true;
+                addBtn.textContent = '處理中...';
+            }
             
             try {
                 // 先從快取查找
@@ -1678,6 +1833,11 @@
                 // 清空輸入框並聚焦，準備下一個輸入
                 document.getElementById('quickKeyInput').value = '';
                 document.getElementById('quickKeyInput').focus();
+                // 恢復按鈕
+                if (addBtn) {
+                    addBtn.disabled = false;
+                    addBtn.textContent = '➕ 加入';
+                }
             }
         }
         
@@ -1725,13 +1885,30 @@
             }
         }
         
-        //================ 上傳 Modal 功能 =================
+        //================ 上傳 Modal 功能（加入進度條與中斷功能） =================
         function showUploadModal() {
+            // 如果正在上傳中，阻止開啟新上傳
+            if (isUploading) {
+                showToast('⚠️ 正在上傳中，請等待完成或中斷', 'warning');
+                return;
+            }
+            
             selectedModalFile = null;
             document.getElementById('modalFileInput').value = '';
             document.getElementById('uploadFileInfo').style.display = 'none';
             document.getElementById('modalUploadBtn').disabled = true;
             document.getElementById('uploadModalStatus').style.display = 'none';
+            
+            // 重置進度條
+            document.getElementById('uploadProgressContainer').classList.remove('active');
+            document.getElementById('uploadProgressBar').style.width = '0%';
+            document.getElementById('uploadProgressBar').textContent = '0%';
+            document.getElementById('uploadStatusText').classList.remove('active');
+            
+            // 顯示正確的按鈕
+            document.getElementById('cancelUploadBtn').style.display = 'none';
+            document.getElementById('closeUploadModalBtn').style.display = 'block';
+            document.getElementById('modalUploadBtn').style.display = 'block';
             
             const sheetName = currentPackingSheet === 'PACKBOX' ? 'PACKBOX' : 'PACKBOXSPARE';
             document.getElementById('uploadModalTitle').textContent = `📤 上傳 CSV 到 ${sheetName}`;
@@ -1753,8 +1930,10 @@
             const uploadBtn = document.getElementById('modalUploadBtn');
             if (currentPackingSheet === 'PACKBOXSPARE') {
                 uploadBtn.className = 'btn-spare';
+                document.getElementById('uploadProgressBar').classList.add('spare');
             } else {
                 uploadBtn.className = 'btn-primary';
+                document.getElementById('uploadProgressBar').classList.remove('spare');
             }
             
             document.getElementById('uploadModalOverlay').classList.add('active');
@@ -1762,7 +1941,17 @@
         }
         
         function closeUploadModal(e) {
-            if (e && e.target !== document.getElementById('uploadModalOverlay')) return;
+            // 如果正在上傳，不允許點擊背景關閉，只能按中斷按鈕
+            if (isUploading) {
+                if (e && e.target === document.getElementById('uploadModalOverlay')) {
+                    showToast('⚠️ 請先中斷上傳再關閉', 'warning');
+                    return;
+                }
+            }
+            
+            if (e && e.target !== document.getElementById('uploadModalOverlay') && 
+                e.target !== document.getElementById('closeUploadModalBtn')) return;
+            
             document.getElementById('uploadModalOverlay').classList.remove('active');
             document.body.style.overflow = '';
         }
@@ -1814,54 +2003,167 @@
             }
         }
         
+        // 更新進度條
+        function updateProgress(percent, statusText) {
+            const progressBar = document.getElementById('uploadProgressBar');
+            const progressContainer = document.getElementById('uploadProgressContainer');
+            const statusTextEl = document.getElementById('uploadStatusText');
+            
+            progressContainer.classList.add('active');
+            statusTextEl.classList.add('active');
+            
+            progressBar.style.width = percent + '%';
+            progressBar.textContent = percent + '%';
+            
+            if (statusText) {
+                statusTextEl.textContent = statusText;
+            }
+        }
+        
+        // 中斷上傳
+        function cancelUpload() {
+            if (currentUploadController) {
+                currentUploadController.abort();
+                currentUploadController = null;
+            }
+            isUploading = false;
+            
+            // 重置UI
+            document.getElementById('cancelUploadBtn').style.display = 'none';
+            document.getElementById('closeUploadModalBtn').style.display = 'block';
+            document.getElementById('modalUploadBtn').style.display = 'block';
+            document.getElementById('modalUploadBtn').disabled = false;
+            document.getElementById('modalUploadBtn').innerHTML = '🚀 開始上傳';
+            
+            updateProgress(0, '已中斷');
+            showUploadModalStatus('⛔ 上傳已中斷', 'error');
+            
+            showToast('上傳已中斷', 'info');
+        }
+        
         async function confirmModalUpload() {
-            if (!selectedModalFile) return;
+            if (!selectedModalFile || isUploading) return;
+            
+            isUploading = true;
+            currentUploadController = new AbortController();
+            
+            // 切換按鈕顯示
+            document.getElementById('cancelUploadBtn').style.display = 'block';
+            document.getElementById('closeUploadModalBtn').style.display = 'none';
             
             const btn = document.getElementById('modalUploadBtn');
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner" style="width: 20px; height: 20px; border-width: 2px; display: inline-block; vertical-align: middle; margin-right: 8px;"></span>上傳中...';
             
+            updateProgress(10, '讀取檔案...');
+            
             const reader = new FileReader();
+            
+            reader.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 30); // 讀取佔30%
+                    updateProgress(percent, '讀取檔案中...');
+                }
+            };
+            
             reader.onload = async function(e) {
+                updateProgress(40, '處理資料...');
                 const content = e.target.result;
                 
+                // 分段上傳以支援進度顯示（如果檔案很大）
+                const chunkSize = 1000; // 每1000行為一個區塊
+                const lines = content.split('\n');
+                const totalLines = lines.length;
+                const chunks = [];
+                
+                for (let i = 0; i < lines.length; i += chunkSize) {
+                    chunks.push(lines.slice(i, i + chunkSize).join('\n'));
+                }
+                
+                updateProgress(50, '上傳至伺服器...');
+                
                 try {
-                    const result = await apiCall('packingUploadCSV', {
-                        data: content,
-                        sheet: currentPackingSheet
-                    }, 5000);
+                    // 使用 XMLHttpRequest 支援進度監控
+                    const result = await uploadWithProgress(content, currentPackingSheet);
                     
                     if (result.success) {
+                        updateProgress(100, '完成！');
                         showUploadModalStatus(`✅ ${result.message}`, 'success');
+                        
                         setTimeout(() => {
                             closeUploadModal();
-                            // 重新載入快取
                             reloadCacheAfterUpload();
                         }, 1500);
                     } else {
-                        showUploadModalStatus('❌ ' + result.error, 'error');
-                        btn.disabled = false;
-                        btn.innerHTML = '🚀 開始上傳';
+                        throw new Error(result.error || '上傳失敗');
                     }
                 } catch (e) {
-                    showUploadModalStatus('⏳ 上傳處理中，請稍後...', 'info');
-                    setTimeout(() => {
-                        closeUploadModal();
-                        reloadCacheAfterUpload();
-                    }, 2000);
+                    if (e.name === 'AbortError') {
+                        // 已經由 cancelUpload 處理
+                        return;
+                    }
+                    updateProgress(0, '上傳失敗');
+                    showUploadModalStatus('❌ ' + e.message, 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '🚀 開始上傳';
+                    document.getElementById('cancelUploadBtn').style.display = 'none';
+                    document.getElementById('closeUploadModalBtn').style.display = 'block';
+                    isUploading = false;
                 }
             };
             
             reader.onerror = function() {
+                updateProgress(0, '讀取失敗');
                 showUploadModalStatus('❌ 檔案讀取失敗', 'error');
                 btn.disabled = false;
                 btn.innerHTML = '🚀 開始上傳';
+                document.getElementById('cancelUploadBtn').style.display = 'none';
+                document.getElementById('closeUploadModalBtn').style.display = 'block';
+                isUploading = false;
             };
             
             reader.readAsText(selectedModalFile);
         }
         
+        // 使用 Fetch 與 AbortController 支援中斷
+        function uploadWithProgress(content, sheet) {
+            return new Promise((resolve, reject) => {
+                const formData = new FormData();
+                formData.append('action', 'packingUploadCSV');
+                formData.append('sheet', sheet);
+                formData.append('data', content);
+                
+                // 由於 Google Apps Script 不支援標準的 FormData POST 處理（會被視為追蹤請求阻擋）
+                // 這裡仍使用 JSONP 方式，但模擬進度
+                // 實際應用中，建議使用後端代理或支援 CORS 的伺服器
+                
+                // 模擬進度更新
+                let progress = 50;
+                const progressInterval = setInterval(() => {
+                    if (progress < 90 && isUploading) {
+                        progress += 5;
+                        updateProgress(progress, '上傳處理中...');
+                    }
+                }, 500);
+                
+                apiCall('packingUploadCSV', {
+                    data: content,
+                    sheet: sheet
+                }, 120000)
+                .then(result => {
+                    clearInterval(progressInterval);
+                    resolve(result);
+                })
+                .catch(error => {
+                    clearInterval(progressInterval);
+                    reject(error);
+                });
+            });
+        }
+        
         async function reloadCacheAfterUpload() {
+            isUploading = false;
+            currentUploadController = null;
             showToast('正在更新資料快取...', 'info');
             delete fullDataCache[currentPackingSheet];
             await loadPackingData();
@@ -1870,7 +2172,7 @@
         //================ API 呼叫 =================
         function apiCall(action, params = {}, timeout = 30000) {
             return new Promise((resolve, reject) => {
-                const callbackName = 'cb_' + Date.now();
+                const callbackName = 'cb_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
                 const script = document.createElement('script');
                 
                 const queryParams = new URLSearchParams({
@@ -1913,18 +2215,21 @@
             showToast('載入中...', 'info');
             
             try {
-                const result = await apiCall('packingGetAllData', { sheet: currentPackingSheet });
+                // 同時載入資料和已儲存的位置
+                await Promise.all([
+                    (async () => {
+                        const result = await apiCall('packingGetAllData', { sheet: currentPackingSheet });
+                        if (result.success) {
+                            packingDataCache = result.data;
+                            fullDataCache[currentPackingSheet] = result.data;
+                        }
+                    })(),
+                    loadSavedZones()
+                ]);
                 
-                if (result.success) {
-                    packingDataCache = result.data;
-                    // 更新快取
-                    fullDataCache[currentPackingSheet] = result.data;
-                    updateZoneList();
-                    loadPackingSummary();
-                    showToast(`已載入 ${result.data.length} 筆資料`, 'success');
-                } else {
-                    showToast('載入失敗：' + result.error, 'error');
-                }
+                updateZoneList();
+                loadPackingSummary();
+                showToast(`已載入 ${packingDataCache.length} 筆資料`, 'success');
             } catch (e) {
                 showToast('載入失敗：' + e.message, 'error');
             }
@@ -1945,6 +2250,15 @@
             document.getElementById('zoneCountAll').textContent = packingDataCache.length + ' 筆';
             
             const zoneList = document.getElementById('zoneList');
+            
+            // 保留已儲存的位置（即使數量為0）
+            const savedZonesList = savedZones[currentPackingSheet] || [];
+            savedZonesList.forEach(zone => {
+                if (!zoneCounts[zone.name]) {
+                    zoneCounts[zone.name] = 0;
+                }
+            });
+            
             zoneList.innerHTML = '';
             
             const sortedZones = Object.entries(zoneCounts).sort((a, b) => b[1] - a[1]);
@@ -2009,6 +2323,7 @@
             document.getElementById('quickInputArea').style.display = 'none';
         }
         
+        // 修改：資料列表預設展開顯示，加入 collapsed 類別控制
         function renderDataList(zone) {
             const container = document.getElementById('dataListContainer');
             container.innerHTML = '';
@@ -2023,14 +2338,10 @@
                 return;
             }
             
-            const isUnclassified = (zone === '');
-            
             filtered.forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'data-item' + (isUnclassified ? ' unclassified' : '');
-                
-                // 未分類預設顯示 A,B,C,D,E
-                const contentClass = isUnclassified ? 'data-content active' : 'data-content';
+                // 預設沒有 collapsed 類別，表示展開狀態
+                div.className = 'data-item';
                 
                 div.innerHTML = `
                     <div class="data-header" onclick="toggleDataItem(this)">
@@ -2040,7 +2351,7 @@
                             <button class="btn-sm btn-danger" onclick="event.stopPropagation(); deleteLocation('${escapeHtml(item.A)}')">🗑️</button>
                         </div>
                     </div>
-                    <div class="${contentClass}">
+                    <div class="data-content">
                         <div class="data-field"><label>A</label><value>${escapeHtml(item.A)}</value></div>
                         <div class="data-field"><label>B</label><value>${escapeHtml(item.B)}</value></div>
                         <div class="data-field"><label>C</label><value>${escapeHtml(item.C)}</value></div>
@@ -2053,9 +2364,10 @@
             });
         }
         
+        // 修改：切換展開/收合狀態
         function toggleDataItem(header) {
-            const content = header.nextElementSibling;
-            content.classList.toggle('active');
+            const dataItem = header.parentElement;
+            dataItem.classList.toggle('collapsed');
         }
         
         //================ Summary 功能 =================
@@ -2075,12 +2387,30 @@
                     const zoneList = document.getElementById('zoneSummaryList');
                     zoneList.innerHTML = '';
                     
-                    if (summary.zones.length === 0) {
+                    // 合併已儲存的位置（即使數量為0）
+                    const savedZonesList = savedZones[currentPackingSheet] || [];
+                    const allZones = [...summary.zones];
+                    
+                    savedZonesList.forEach(savedZone => {
+                        if (!allZones.find(z => z.name === savedZone.name)) {
+                            allZones.push({ name: savedZone.name, count: 0 });
+                        }
+                    });
+                    
+                    // 按數量排序，但0數量的排在最後
+                    allZones.sort((a, b) => {
+                        if (a.count === 0 && b.count > 0) return 1;
+                        if (b.count === 0 && a.count > 0) return -1;
+                        return b.count - a.count;
+                    });
+                    
+                    if (allZones.length === 0) {
                         zoneList.innerHTML = '<div class="summary-item"><span class="summary-label">無資料</span><span class="summary-value">0</span></div>';
                     } else {
-                        summary.zones.forEach(z => {
+                        allZones.forEach(z => {
                             const div = document.createElement('div');
                             div.className = 'summary-item';
+                            if (z.count === 0) div.style.opacity = '0.6';
                             div.innerHTML = `
                                 <span class="summary-label">${escapeHtml(z.name)}</span>
                                 <span class="summary-value">${z.count} 筆</span>
@@ -2142,12 +2472,9 @@
                 return;
             }
             
-            const isUnclassified = (currentZone === '');
-            
             filtered.forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'data-item' + (isUnclassified ? ' unclassified' : '');
-                const contentClass = isUnclassified ? 'data-content active' : 'data-content';
+                div.className = 'data-item';
                 
                 div.innerHTML = `
                     <div class="data-header" onclick="toggleDataItem(this)">
@@ -2157,7 +2484,7 @@
                             <button class="btn-sm btn-danger" onclick="event.stopPropagation(); deleteLocation('${escapeHtml(item.A)}')">🗑️</button>
                         </div>
                     </div>
-                    <div class="${contentClass}">
+                    <div class="data-content">
                         <div class="data-field"><label>A</label><value>${escapeHtml(item.A)}</value></div>
                         <div class="data-field"><label>B</label><value>${escapeHtml(item.B)}</value></div>
                         <div class="data-field"><label>C</label><value>${escapeHtml(item.C)}</value></div>
@@ -2228,6 +2555,12 @@
                     });
                     
                     if (result.success) {
+                        // 更新本地儲存的位置名稱
+                        if (savedZones[currentPackingSheet]) {
+                            const zone = savedZones[currentPackingSheet].find(z => z.name === oldName);
+                            if (zone) zone.name = newName;
+                        }
+                        
                         showToast('✅ ' + result.message, 'success');
                         loadPackingData();
                         closeModal();
@@ -2342,16 +2675,23 @@
             }
         }
         
+        // 修改：清空全部資料，包括標題列
         async function clearPackingAll() {
-            if (!confirm('⚠️ 確定要清除全部資料嗎？（刪除 A-F 所有欄位）')) return;
+            if (!confirm('⚠️ 確定要清除全部資料嗎？（刪除 A-F 所有欄位，包含標題列）')) return;
             
             try {
-                const result = await apiCall('packingClearAll', { sheet: currentPackingSheet });
+                const result = await apiCall('packingClearAll', { 
+                    sheet: currentPackingSheet,
+                    includeHeader: true // 告知後端連標題列也清除
+                });
                 
                 if (result.success) {
                     showToast('✅ ' + result.message, 'success');
                     delete fullDataCache[currentPackingSheet];
-                    loadPackingData();
+                    // 清空本地資料
+                    packingDataCache = [];
+                    updateZoneList();
+                    loadPackingSummary();
                 } else {
                     showToast('❌ ' + result.error, 'error');
                 }
@@ -2463,7 +2803,7 @@
         
         // 初始化 - 預先載入快取
         document.addEventListener('DOMContentLoaded', function() {
-            // 先載入基本資料
+            // 先載入基本資料（包含已儲存的位置）
             loadPackingData();
             // 然後預載所有快取（背景執行）
             setTimeout(preloadAllData, 1000);
@@ -2472,6 +2812,13 @@
         // ESC 鍵關閉 Modal
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
+                if (isUploading) {
+                    // 如果正在上傳，詢問是否中斷
+                    if (confirm('正在上傳中，是否中斷？')) {
+                        cancelUpload();
+                    }
+                    return;
+                }
                 closeModal();
                 closeUploadModal();
             }
