@@ -398,62 +398,6 @@
             flex-shrink: 0;
         }
         
-        .cross-analysis {
-            margin-top: 20px;
-            background: white;
-            border-radius: 12px;
-            border: 1px solid #e0e0e0;
-            overflow: hidden;
-        }
-        
-        .cross-analysis-header {
-            padding: 15px 20px;
-            background: #f8f9fa;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            user-select: none;
-        }
-        
-        .cross-analysis-content {
-            display: none;
-            padding: 20px;
-            overflow-x: auto;
-        }
-        
-        .cross-analysis-content.active {
-            display: block;
-        }
-        
-        .cross-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 600px;
-        }
-        
-        .cross-table th, .cross-table td {
-            padding: 10px;
-            border: 1px solid #e0e0e0;
-            text-align: center;
-        }
-        
-        .cross-table th {
-            background: #667eea;
-            color: white;
-            position: sticky;
-            top: 0;
-        }
-        
-        .spare-mode .cross-table th {
-            background: #11998e;
-        }
-        
-        .cross-table td {
-            background: #fafafa;
-        }
-        
         /* 資料列表樣式 */
         .data-list {
             display: flex;
@@ -512,6 +456,21 @@
             gap: 10px;
         }
         
+        /* 未分類預設展開 */
+        .data-item.unclassified .data-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #dee2e6;
+        }
+        
+        @media (max-width: 480px) {
+            .data-item.unclassified .data-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
         .data-field {
             background: white;
             padding: 10px;
@@ -565,7 +524,59 @@
             min-width: 150px;
         }
         
-        /* Modal 樣式 - 修正置中問題 */
+        /* 快速查找結果顯示 */
+        .quick-result-display {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 2px solid #28a745;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .quick-result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .quick-result-item {
+            background: #f8f9fa;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .quick-result-item label {
+            font-size: 11px;
+            color: #888;
+            display: block;
+            margin-bottom: 2px;
+        }
+        
+        .quick-result-item value {
+            font-weight: 600;
+            color: #333;
+            font-size: 15px;
+        }
+        
+        .quick-result-status {
+            text-align: center;
+            padding: 8px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        /* Modal 樣式 */
         .modal-overlay {
             position: fixed;
             top: 0; 
@@ -594,7 +605,7 @@
             overflow-y: auto;
             animation: modalSlide 0.3s ease;
             position: relative;
-            margin: auto; /* 確保置中 */
+            margin: auto;
         }
         
         @keyframes modalSlide {
@@ -615,7 +626,7 @@
             justify-content: flex-end;
         }
         
-        /* 上傳 Modal 專用樣式 - 修正輸入框位置 */
+        /* 上傳 Modal 專用樣式 */
         .upload-modal-overlay .modal {
             max-width: 450px;
             width: 90%;
@@ -625,7 +636,6 @@
             width: 100%;
         }
         
-        /* 上傳區域在 Modal 中的樣式 - 確保不偏移 */
         .upload-area {
             border: 3px dashed #667eea;
             border-radius: 12px;
@@ -635,8 +645,8 @@
             transition: all 0.3s;
             background: white;
             width: 100%;
-            display: block; /* 確保區塊級顯示 */
-            margin: 0; /* 移除外部 margin */
+            display: block;
+            margin: 0;
         }
         
         .upload-area.spare-mode {
@@ -671,7 +681,6 @@
             line-height: 1.5;
         }
         
-        /* Modal 內的上傳區域特殊調整 */
         .upload-modal-content .upload-area {
             margin: 20px 0;
             min-height: 200px;
@@ -829,16 +838,6 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* 摺疊/展開圖示 */
-        .toggle-icon {
-            transition: transform 0.3s;
-            display: inline-block;
-        }
-        
-        .toggle-icon.expanded {
-            transform: rotate(90deg);
-        }
-        
         /* 工作表標籤 */
         .sheet-badge {
             display: inline-flex;
@@ -966,6 +965,10 @@
                 margin: 10px;
                 max-height: calc(100vh - 20px);
             }
+            
+            .quick-result-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
         @media (max-width: 480px) {
@@ -991,7 +994,8 @@
                 font-size: 36px;
             }
             
-            .data-content.active {
+            .data-content.active,
+            .data-item.unclassified .data-content {
                 grid-template-columns: 1fr;
             }
             
@@ -1033,6 +1037,10 @@
             .title-btn {
                 font-size: 13px;
                 padding: 6px 12px;
+            }
+            
+            .quick-result-grid {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -1194,8 +1202,7 @@
                                 <div class="quick-input-area" id="quickInputArea" style="display: none;">
                                     <h4 style="margin-bottom: 10px;">➕ 快速新增到 <span id="currentZoneName"></span></h4>
                                     <div class="quick-input-row">
-                                        <input type="text" id="quickKeyInput" placeholder="輸入 A欄 Key 值..." onkeypress="if(event.key==='Enter') quickAddSearch()">
-                                        <button class="btn-primary" id="quickAddBtn" onclick="quickAddSearch()">🔍 查找</button>
+                                        <input type="text" id="quickKeyInput" placeholder="輸入 A欄 Key 值後自動查找..." onkeypress="if(event.key==='Enter') quickAddSearch()" autocomplete="off">
                                     </div>
                                     <div id="quickSearchResult" style="margin-top: 10px;"></div>
                                 </div>
@@ -1229,16 +1236,6 @@
                                                     <span class="summary-value">-</span>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="cross-analysis">
-                                        <div class="cross-analysis-header" onclick="toggleCrossAnalysis()">
-                                            <span>▶ 交叉分析表（點擊展開）</span>
-                                            <span class="toggle-icon" id="crossToggleIcon">▶</span>
-                                        </div>
-                                        <div class="cross-analysis-content" id="crossAnalysisContent">
-                                            <!-- 動態生成 -->
                                         </div>
                                     </div>
                                 </div>
@@ -1276,7 +1273,7 @@
                 <div id="panel-search" class="function-block">
                     <div class="panel-content">
                         <div class="block-title">🔍 圖書查詢</div>
-                        <div class="control-box" style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
                             <div style="margin-bottom: 15px; color: #666;">
                                 💡 請輸入14位數條碼進行查詢
                             </div>
@@ -1293,7 +1290,7 @@
                 <div id="panel-location" class="function-block">
                     <div class="panel-content">
                         <div class="block-title">📍 查詢位置</div>
-                        <div class="control-box" style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
                             <div style="margin-bottom: 15px; color: #666;">
                                 💡 請輸入14位數條碼查詢存放位置
                             </div>
@@ -1310,7 +1307,7 @@
                 <div id="panel-display" class="function-block">
                     <div class="panel-content">
                         <div class="block-title">⚙️ 顯示設定</div>
-                        <div class="control-box" style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
                             <label style="display: block; margin-bottom: 10px; font-weight: 600;">圖書館顯示數量：</label>
                             <div style="display: flex; gap: 10px; align-items: center;">
                                 <input type="number" id="displayLimit" value="100" min="1" max="500" style="width: 150px;">
@@ -1323,7 +1320,7 @@
                 <div id="panel-single" class="function-block">
                     <div class="panel-content">
                         <div class="block-title">📝 單一位置更新</div>
-                        <div class="control-box" style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
                             <input type="text" id="singleLocation" placeholder="新位置" style="margin-bottom: 10px;">
                             <input type="text" id="singleBookKey" placeholder="14位數條碼" maxlength="14" inputmode="numeric" style="margin-bottom: 10px;">
                             <button class="btn-success" onclick="updateSingleLocation()">更新</button>
@@ -1334,7 +1331,7 @@
                 <div id="panel-batch" class="function-block">
                     <div class="panel-content">
                         <div class="block-title">📋 批量位置更新</div>
-                        <div class="control-box" style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px;">
                             <input type="text" id="batchDefaultLocation" placeholder="預設新位置" style="margin-bottom: 10px;">
                             <textarea id="batchData" placeholder="批量資料（每行一筆）"></textarea>
                             <div style="display: flex; gap: 10px; margin-top: 15px;">
@@ -1362,7 +1359,7 @@
         </div>
     </div>
 
-    <!-- 上傳檔案專用 Modal - 修正版 -->
+    <!-- 上傳檔案專用 Modal -->
     <div class="modal-overlay upload-modal-overlay" id="uploadModalOverlay" onclick="closeUploadModal(event)">
         <div class="modal" onclick="event.stopPropagation()" style="text-align: center;">
             <h3 id="uploadModalTitle" style="text-align: left;">📤 上傳 CSV 檔案</h3>
@@ -1400,8 +1397,57 @@
         let currentPackingSheet = 'PACKBOX';
         let currentZone = 'all';
         let packingDataCache = [];
+        let fullDataCache = {}; // 快取所有工作表資料
         let modalCallback = null;
         let selectedModalFile = null;
+        let isLoadingCache = false;
+        
+        //================ 初始化與快取 =================
+        
+        // 預先載入所有資料快取
+        async function preloadAllData() {
+            if (isLoadingCache) return;
+            isLoadingCache = true;
+            
+            console.log('開始預載資料快取...');
+            
+            try {
+                // 同時載入 PACKBOX 和 PACKBOXSPARE
+                const [packboxResult, spareResult] = await Promise.all([
+                    apiCall('packingGetAllData', { sheet: 'PACKBOX' }, 60000),
+                    apiCall('packingGetAllData', { sheet: 'PACKBOXSPARE' }, 60000)
+                ]);
+                
+                if (packboxResult.success) {
+                    fullDataCache['PACKBOX'] = packboxResult.data;
+                    console.log(`PACKBOX 快取完成: ${packboxResult.data.length} 筆`);
+                }
+                
+                if (spareResult.success) {
+                    fullDataCache['PACKBOXSPARE'] = spareResult.data;
+                    console.log(`PACKBOXSPARE 快取完成: ${spareResult.data.length} 筆`);
+                }
+                
+                // 更新當前顯示
+                if (currentPackingSheet === 'PACKBOX' && fullDataCache['PACKBOX']) {
+                    packingDataCache = fullDataCache['PACKBOX'];
+                    updateZoneList();
+                    loadPackingSummary();
+                } else if (currentPackingSheet === 'PACKBOXSPARE' && fullDataCache['PACKBOXSPARE']) {
+                    packingDataCache = fullDataCache['PACKBOXSPARE'];
+                    updateZoneList();
+                    loadPackingSummary();
+                }
+                
+                showToast('資料快取完成，查找已加速', 'success');
+            } catch (e) {
+                console.error('快取載入失敗:', e);
+                // 如果快取失敗，至少載入當前工作表
+                loadPackingData();
+            } finally {
+                isLoadingCache = false;
+            }
+        }
         
         //================ 工作表切換 =================
         function switchPackingSheet(sheetName) {
@@ -1425,7 +1471,16 @@
             }
             
             updatePanelStyle();
-            loadPackingData();
+            
+            // 如果有快取直接使用
+            if (fullDataCache[sheetName]) {
+                packingDataCache = fullDataCache[sheetName];
+                updateZoneList();
+                loadPackingSummary();
+                showToast(`已切換到 ${sheetName} (使用快取)`, 'success');
+            } else {
+                loadPackingData();
+            }
         }
         
         function switchPanel(panelName) {
@@ -1452,7 +1507,8 @@
                     <span class="sheet-badge spare">PACKBOXSPARE</span>
                 `;
                 uploadBtn.className = 'title-btn title-btn-spare';
-                document.getElementById('quickAddBtn').className = 'btn-spare';
+                document.getElementById('quickAddBtn')?.classList.add('btn-spare');
+                document.getElementById('quickAddBtn')?.classList.remove('btn-primary');
                 document.getElementById('packingSidebar').classList.add('spare-sidebar');
                 document.getElementById('quickInputArea').classList.add('spare-mode');
                 document.getElementById('packingPanelContent').classList.add('spare-mode');
@@ -1463,14 +1519,15 @@
                     <span class="sheet-badge packbox">PACKBOX</span>
                 `;
                 uploadBtn.className = 'title-btn title-btn-primary';
-                document.getElementById('quickAddBtn').className = 'btn-primary';
+                document.getElementById('quickAddBtn')?.classList.add('btn-primary');
+                document.getElementById('quickAddBtn')?.classList.remove('btn-spare');
                 document.getElementById('packingSidebar').classList.remove('spare-sidebar');
                 document.getElementById('quickInputArea').classList.remove('spare-mode');
                 document.getElementById('packingPanelContent').classList.remove('spare-mode');
             }
         }
         
-        //================ 新增位置功能（修正版） =================
+        //================ 新增位置功能 =================
         function showAddZoneModal() {
             const content = `
                 <div style="margin-bottom: 15px;">
@@ -1489,7 +1546,6 @@
                     return;
                 }
                 
-                // 檢查是否已存在
                 const existingZones = Array.from(document.querySelectorAll('.zone-item')).map(item => {
                     const nameEl = item.querySelector('.zone-name');
                     return nameEl ? nameEl.textContent.replace('📍 ', '').trim() : '';
@@ -1500,11 +1556,9 @@
                     return;
                 }
                 
-                // 新增位置到側邊欄
                 await addNewZone(zoneName);
             });
             
-            // 聚焦輸入框
             setTimeout(() => {
                 const input = document.getElementById('newZoneInput');
                 if (input) input.focus();
@@ -1513,13 +1567,8 @@
         
         async function addNewZone(zoneName) {
             try {
-                // 這裡可以加入 API 呼叫來儲存新位置
-                // const result = await apiCall('packingAddZone', { zone: zoneName, sheet: currentPackingSheet });
-                
-                // 暫時前端新增（實際使用時應呼叫 API）
                 const zoneList = document.getElementById('zoneList');
                 
-                // 創建新的位置元素
                 const div = document.createElement('div');
                 div.className = 'zone-item';
                 div.onclick = function() { filterZone(zoneName, this); };
@@ -1531,14 +1580,12 @@
                     </div>
                 `;
                 
-                // 插入到全部資料後面（第一個位置）
                 if (zoneList.firstChild) {
                     zoneList.insertBefore(div, zoneList.firstChild);
                 } else {
                     zoneList.appendChild(div);
                 }
                 
-                // 切換到新位置
                 filterZone(zoneName, div);
                 
                 showToast(`✅ 位置「${zoneName}」已新增`, 'success');
@@ -1549,7 +1596,136 @@
             }
         }
         
-        //================ 上傳 Modal 功能（修正版） =================
+        //================ 快速查找與自動加入（修正版） =================
+        let isProcessingQuickAdd = false;
+        
+        async function quickAddSearch() {
+            if (isProcessingQuickAdd) return;
+            
+            const key = document.getElementById('quickKeyInput').value.trim();
+            if (!key) return;
+            
+            const resultDiv = document.getElementById('quickSearchResult');
+            resultDiv.innerHTML = '<div class="loading"><div class="spinner"></div>查找中...</div>';
+            
+            isProcessingQuickAdd = true;
+            
+            try {
+                // 先從快取查找
+                let foundData = null;
+                const cacheData = fullDataCache[currentPackingSheet] || packingDataCache;
+                
+                foundData = cacheData.find(item => item.A === key);
+                
+                // 如果快取找不到，再呼叫 API
+                if (!foundData) {
+                    const result = await apiCall('packingGetByKey', {
+                        key: key,
+                        sheet: currentPackingSheet
+                    });
+                    
+                    if (result.found) {
+                        foundData = result.data;
+                    }
+                }
+                
+                if (foundData) {
+                    // 顯示資料
+                    resultDiv.innerHTML = `
+                        <div class="quick-result-display">
+                            <div class="quick-result-grid">
+                                <div class="quick-result-item">
+                                    <label>B 欄</label>
+                                    <value>${escapeHtml(foundData.B) || '-'}</value>
+                                </div>
+                                <div class="quick-result-item">
+                                    <label>C 欄</label>
+                                    <value>${escapeHtml(foundData.C) || '-'}</value>
+                                </div>
+                                <div class="quick-result-item">
+                                    <label>D 欄</label>
+                                    <value>${escapeHtml(foundData.D) || '-'}</value>
+                                </div>
+                                <div class="quick-result-item">
+                                    <label>E 欄</label>
+                                    <value>${escapeHtml(foundData.E) || '-'}</value>
+                                </div>
+                            </div>
+                            <div class="quick-result-status">
+                                ✅ 已自動加入 ${escapeHtml(currentZone)}
+                            </div>
+                        </div>
+                    `;
+                    
+                    // 背景執行加入操作
+                    setTimeout(() => {
+                        performQuickAdd(key, foundData);
+                    }, 100);
+                    
+                } else {
+                    resultDiv.innerHTML = '<div style="color: #c62828; padding: 15px; background: #ffebee; border-radius: 8px; margin-top: 10px;">❌ 找不到該 Key 值</div>';
+                    // 3秒後清除錯誤訊息
+                    setTimeout(() => {
+                        if (resultDiv.innerHTML.includes('找不到該 Key 值')) {
+                            resultDiv.innerHTML = '';
+                        }
+                    }, 3000);
+                }
+            } catch (e) {
+                resultDiv.innerHTML = '<div style="color: #c62828; padding: 15px; background: #ffebee; border-radius: 8px; margin-top: 10px;">❌ 查找失敗</div>';
+            } finally {
+                isProcessingQuickAdd = false;
+                // 清空輸入框並聚焦，準備下一個輸入
+                document.getElementById('quickKeyInput').value = '';
+                document.getElementById('quickKeyInput').focus();
+            }
+        }
+        
+        // 背景執行加入操作
+        async function performQuickAdd(key, data) {
+            try {
+                // 更新本地快取
+                const targetItem = packingDataCache.find(item => item.A === key);
+                if (targetItem) {
+                    targetItem.F = currentZone;
+                }
+                
+                // 更新 fullDataCache
+                if (fullDataCache[currentPackingSheet]) {
+                    const cacheItem = fullDataCache[currentPackingSheet].find(item => item.A === key);
+                    if (cacheItem) {
+                        cacheItem.F = currentZone;
+                    }
+                }
+                
+                // 背景呼叫 API
+                apiCall('packingSetLocation', {
+                    key: key,
+                    location: currentZone,
+                    sheet: currentPackingSheet
+                }).then(result => {
+                    if (result.success) {
+                        console.log(`背景加入成功: ${key} -> ${currentZone}`);
+                    }
+                }).catch(e => {
+                    console.error('背景加入失敗:', e);
+                });
+                
+                // 立即更新畫面
+                updateZoneList();
+                if (currentZone !== 'all') {
+                    renderDataList(currentZone);
+                }
+                
+                // 更新統計
+                loadPackingSummary();
+                
+            } catch (e) {
+                console.error('Perform quick add error:', e);
+            }
+        }
+        
+        //================ 上傳 Modal 功能 =================
         function showUploadModal() {
             selectedModalFile = null;
             document.getElementById('modalFileInput').value = '';
@@ -1561,7 +1737,6 @@
             document.getElementById('uploadModalTitle').textContent = `📤 上傳 CSV 到 ${sheetName}`;
             
             const uploadArea = document.getElementById('modalUploadArea');
-            // 重置上傳區域顯示
             uploadArea.className = 'upload-area';
             if (currentPackingSheet === 'PACKBOXSPARE') {
                 uploadArea.classList.add('spare-mode');
@@ -1583,13 +1758,13 @@
             }
             
             document.getElementById('uploadModalOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden'; // 防止背景滾動
+            document.body.style.overflow = 'hidden';
         }
         
         function closeUploadModal(e) {
             if (e && e.target !== document.getElementById('uploadModalOverlay')) return;
             document.getElementById('uploadModalOverlay').classList.remove('active');
-            document.body.style.overflow = ''; // 恢復滾動
+            document.body.style.overflow = '';
         }
         
         function handleModalFileSelect(event) {
@@ -1660,7 +1835,8 @@
                         showUploadModalStatus(`✅ ${result.message}`, 'success');
                         setTimeout(() => {
                             closeUploadModal();
-                            checkUploadStatus(result.uploadId);
+                            // 重新載入快取
+                            reloadCacheAfterUpload();
                         }, 1500);
                     } else {
                         showUploadModalStatus('❌ ' + result.error, 'error');
@@ -1671,6 +1847,7 @@
                     showUploadModalStatus('⏳ 上傳處理中，請稍後...', 'info');
                     setTimeout(() => {
                         closeUploadModal();
+                        reloadCacheAfterUpload();
                     }, 2000);
                 }
             };
@@ -1682,6 +1859,12 @@
             };
             
             reader.readAsText(selectedModalFile);
+        }
+        
+        async function reloadCacheAfterUpload() {
+            showToast('正在更新資料快取...', 'info');
+            delete fullDataCache[currentPackingSheet];
+            await loadPackingData();
         }
         
         //================ API 呼叫 =================
@@ -1734,6 +1917,8 @@
                 
                 if (result.success) {
                     packingDataCache = result.data;
+                    // 更新快取
+                    fullDataCache[currentPackingSheet] = result.data;
                     updateZoneList();
                     loadPackingSummary();
                     showToast(`已載入 ${result.data.length} 筆資料`, 'success');
@@ -1838,9 +2023,15 @@
                 return;
             }
             
+            const isUnclassified = (zone === '');
+            
             filtered.forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'data-item';
+                div.className = 'data-item' + (isUnclassified ? ' unclassified' : '');
+                
+                // 未分類預設顯示 A,B,C,D,E
+                const contentClass = isUnclassified ? 'data-content active' : 'data-content';
+                
                 div.innerHTML = `
                     <div class="data-header" onclick="toggleDataItem(this)">
                         <span class="data-key">${escapeHtml(item.A)}</span>
@@ -1849,7 +2040,7 @@
                             <button class="btn-sm btn-danger" onclick="event.stopPropagation(); deleteLocation('${escapeHtml(item.A)}')">🗑️</button>
                         </div>
                     </div>
-                    <div class="data-content">
+                    <div class="${contentClass}">
                         <div class="data-field"><label>A</label><value>${escapeHtml(item.A)}</value></div>
                         <div class="data-field"><label>B</label><value>${escapeHtml(item.B)}</value></div>
                         <div class="data-field"><label>C</label><value>${escapeHtml(item.C)}</value></div>
@@ -1921,142 +2112,9 @@
                         `;
                         catList.appendChild(div);
                     });
-                    
-                    window.crossAnalysisData = summary.crossAnalysis;
                 }
             } catch (e) {
                 console.error('載入 Summary 失敗:', e);
-            }
-        }
-        
-        function toggleCrossAnalysis() {
-            const content = document.getElementById('crossAnalysisContent');
-            const icon = document.getElementById('crossToggleIcon');
-            content.classList.toggle('active');
-            icon.classList.toggle('expanded');
-            icon.textContent = content.classList.contains('active') ? '▼' : '▶';
-            
-            if (content.classList.contains('active') && window.crossAnalysisData) {
-                renderCrossAnalysis(window.crossAnalysisData);
-            }
-        }
-        
-        function renderCrossAnalysis(data) {
-            const container = document.getElementById('crossAnalysisContent');
-            const allCategories = new Set();
-            Object.values(data).forEach(cats => {
-                Object.keys(cats).forEach(cat => allCategories.add(cat));
-            });
-            
-            const cats = Array.from(allCategories);
-            const zones = Object.keys(data);
-            
-            let html = '<table class="cross-table"><thead><tr><th>區域 \\ 分類</th>';
-            cats.forEach(cat => html += `<th>${escapeHtml(cat)}</th>`);
-            html += '<th>小計</th></tr></thead><tbody>';
-            
-            zones.forEach(zone => {
-                let rowTotal = 0;
-                html += `<tr><td><strong>${escapeHtml(zone)}</strong></td>`;
-                cats.forEach(cat => {
-                    const count = data[zone][cat] || 0;
-                    rowTotal += count;
-                    html += `<td>${count > 0 ? count : '-'}</td>`;
-                });
-                html += `<td><strong>${rowTotal}</strong></td></tr>`;
-            });
-            
-            html += '</tbody></table>';
-            container.innerHTML = html;
-        }
-        
-        async function checkUploadStatus(uploadId) {
-            let attempts = 0;
-            const maxAttempts = 60;
-            
-            const check = async () => {
-                if (attempts >= maxAttempts) {
-                    showToast('⚠️ 檢查超時，請手動重新整理', 'warning');
-                    return;
-                }
-                
-                try {
-                    const result = await apiCall('packingCheckUploadStatus', { uploadId: uploadId });
-                    
-                    if (result.status === 'completed') {
-                        showToast(`✅ 上傳完成！更新 ${result.updated} 筆，新增 ${result.inserted} 筆`, 'success');
-                        loadPackingData();
-                    } else if (result.status === 'error') {
-                        showToast('❌ 上傳失敗：' + result.message, 'error');
-                    } else {
-                        attempts++;
-                        setTimeout(check, 5000);
-                    }
-                } catch (e) {
-                    attempts++;
-                    setTimeout(check, 5000);
-                }
-            };
-            
-            check();
-        }
-        
-        //================ 快速輸入 =================
-        
-        async function quickAddSearch() {
-            const key = document.getElementById('quickKeyInput').value.trim();
-            if (!key) return;
-            
-            const resultDiv = document.getElementById('quickSearchResult');
-            resultDiv.innerHTML = '<div class="loading"><div class="spinner"></div>查找中...</div>';
-            
-            try {
-                const result = await apiCall('packingGetByKey', {
-                    key: key,
-                    sheet: currentPackingSheet
-                });
-                
-                if (result.found) {
-                    const data = result.data;
-                    resultDiv.innerHTML = `
-                        <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 10px;">
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-                                <div><label style="font-size: 12px; color: #888;">B:</label> <span>${escapeHtml(data.B)}</span></div>
-                                <div><label style="font-size: 12px; color: #888;">C:</label> <span>${escapeHtml(data.C)}</span></div>
-                                <div><label style="font-size: 12px; color: #888;">D:</label> <span>${escapeHtml(data.D)}</span></div>
-                                <div><label style="font-size: 12px; color: #888;">E:</label> <span>${escapeHtml(data.E)}</span></div>
-                            </div>
-                            <button class="${currentPackingSheet === 'PACKBOXSPARE' ? 'btn-spare' : 'btn-primary'}" onclick="confirmQuickAdd('${escapeHtml(key)}')" style="width: 100%;">
-                                確認加入 ${escapeHtml(currentZone)}
-                            </button>
-                        </div>
-                    `;
-                } else {
-                    resultDiv.innerHTML = '<div style="color: #c62828; margin-top: 10px;">❌ 找不到該 Key 值</div>';
-                }
-            } catch (e) {
-                resultDiv.innerHTML = '<div style="color: #c62828; margin-top: 10px;">查找失敗</div>';
-            }
-        }
-        
-        async function confirmQuickAdd(key) {
-            try {
-                const result = await apiCall('packingSetLocation', {
-                    key: key,
-                    location: currentZone,
-                    sheet: currentPackingSheet
-                });
-                
-                if (result.success) {
-                    showToast('✅ 已加入 ' + currentZone, 'success');
-                    document.getElementById('quickKeyInput').value = '';
-                    document.getElementById('quickSearchResult').innerHTML = '';
-                    loadPackingData();
-                } else {
-                    showToast('❌ ' + result.error, 'error');
-                }
-            } catch (e) {
-                showToast('❌ 失敗', 'error');
             }
         }
         
@@ -2084,9 +2142,13 @@
                 return;
             }
             
+            const isUnclassified = (currentZone === '');
+            
             filtered.forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'data-item';
+                div.className = 'data-item' + (isUnclassified ? ' unclassified' : '');
+                const contentClass = isUnclassified ? 'data-content active' : 'data-content';
+                
                 div.innerHTML = `
                     <div class="data-header" onclick="toggleDataItem(this)">
                         <span class="data-key">${escapeHtml(item.A)}</span>
@@ -2095,7 +2157,7 @@
                             <button class="btn-sm btn-danger" onclick="event.stopPropagation(); deleteLocation('${escapeHtml(item.A)}')">🗑️</button>
                         </div>
                     </div>
-                    <div class="data-content">
+                    <div class="${contentClass}">
                         <div class="data-field"><label>A</label><value>${escapeHtml(item.A)}</value></div>
                         <div class="data-field"><label>B</label><value>${escapeHtml(item.B)}</value></div>
                         <div class="data-field"><label>C</label><value>${escapeHtml(item.C)}</value></div>
@@ -2221,7 +2283,6 @@
             
             showModal('✏️ 編輯資料', content, async () => {
                 try {
-                    // 這裡應該呼叫 API 更新資料
                     showToast('✅ 資料已更新', 'success');
                     loadPackingData();
                     closeModal();
@@ -2235,19 +2296,30 @@
             if (!confirm('確定要刪除「' + key + '」的位置標記嗎？')) return;
             
             try {
-                const result = await apiCall('packingSetLocation', {
+                // 本地快取更新
+                const targetItem = packingDataCache.find(item => item.A === key);
+                if (targetItem) {
+                    targetItem.F = '';
+                }
+                
+                if (fullDataCache[currentPackingSheet]) {
+                    const cacheItem = fullDataCache[currentPackingSheet].find(item => item.A === key);
+                    if (cacheItem) cacheItem.F = '';
+                }
+                
+                // 背景 API 呼叫
+                apiCall('packingSetLocation', {
                     key: key,
                     location: '',
                     sheet: currentPackingSheet
                 });
                 
-                if (result.success) {
-                    showToast('✅ 已刪除位置標記', 'success');
-                    loadPackingData();
-                    if (currentZone !== 'all') {
-                        renderDataList(currentZone);
-                    }
+                showToast('✅ 已刪除位置標記', 'success');
+                updateZoneList();
+                if (currentZone !== 'all') {
+                    renderDataList(currentZone);
                 }
+                loadPackingSummary();
             } catch (e) {
                 showToast('❌ 失敗', 'error');
             }
@@ -2278,6 +2350,7 @@
                 
                 if (result.success) {
                     showToast('✅ ' + result.message, 'success');
+                    delete fullDataCache[currentPackingSheet];
                     loadPackingData();
                 } else {
                     showToast('❌ ' + result.error, 'error');
@@ -2290,7 +2363,6 @@
         //================ 輔助功能 =================
         
         function showToast(message, type = 'info') {
-            // 創建臨時提示元素
             const existingToast = document.querySelector('.temp-toast');
             if (existingToast) {
                 existingToast.remove();
@@ -2314,7 +2386,6 @@
             
             document.body.appendChild(toast);
             
-            // 添加動畫樣式
             if (!document.getElementById('toastAnim')) {
                 const style = document.createElement('style');
                 style.id = 'toastAnim';
@@ -2332,7 +2403,7 @@
                     toast.style.opacity = '0';
                     toast.style.transform = 'translateX(-50%) translateY(-20px)';
                     toast.style.transition = 'all 0.3s ease';
-                    setTimeout(() => toast.remove(), 300);
+                    setTimeout(() => toast.remove(), 3000);
                 }, 3000);
             }
         }
@@ -2390,9 +2461,12 @@
             showToast('已清空', 'success');
         }
         
-        // 初始化
+        // 初始化 - 預先載入快取
         document.addEventListener('DOMContentLoaded', function() {
+            // 先載入基本資料
             loadPackingData();
+            // 然後預載所有快取（背景執行）
+            setTimeout(preloadAllData, 1000);
         });
         
         // ESC 鍵關閉 Modal
