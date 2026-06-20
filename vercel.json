@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "https://script.google.com/macros/s/AKfycbyRIBJ6HSuxTOlG1jSlDPi3JdCQsQuoGs_5bsJR8LbvsWIFGaUfJ0LCwulfGbTbpwQ6Nw/exec"
+      "destination": "http://bobbybase.ddns.net:5000/"
     }
   ],
   "headers": [
